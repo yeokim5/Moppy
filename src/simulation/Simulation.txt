@@ -15,10 +15,14 @@
 ------------------------------------------------------------------------------------------------------------------------
 
 
-set up wsl
-
+set up wsl & gazebo
 - https://www.youtube.com/watch?v=9F5MW1fJT4ga
 - watch documentation for setup: https://gazebosim.org/docs/harmonic/install_ubuntu/
+
+run gazebo
+- gz sim
+
+maybe try actual real world data? ask llm about it.
 
 ------------------------------------------------------------------------------------------------------------------------
 
