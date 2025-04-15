@@ -12,15 +12,19 @@
 - [ ] Capture and save camera image datasets
 - [ ] Validate simulation data quality and format
 
------------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+
+
+set up wsl
+
+- https://www.youtube.com/watch?v=9F5MW1fJT4ga
+- watch documentation for setup: https://gazebosim.org/docs/harmonic/install_ubuntu/
+
+------------------------------------------------------------------------------------------------------------------------
 
 
 what i learned.
-- for the setup don't rely on ai, watch docuemnt or youtube tutorial for the fastest and best.  
-- https://www.youtube.com/watch?v=9F5MW1fJT4g
-- watch documentation for setup: https://gazebosim.org/docs/harmonic/install_ubuntu/
+
+- for the setup don't rely on ai, watch docuemnt or youtube tutorial for the fastest and best.
 
 - https://github.com/linorobot/linorobot2
-
-
