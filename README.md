@@ -2,7 +2,7 @@
 
 General Flow
 
-- Simulate a room in Gazebo → Capture LIDAR/camera data → Save as CSV/images.
+- Simulate a room in Webots → Capture LIDAR/camera data → Save as CSV/images.
 - Run Apache Airflow DAG to clean data → Extract edges with OpenCV.
 - Train a PyTorch CNN to detect obstacles → Save model.
 - Automate training with GitHub Actions → Track with MLflow.

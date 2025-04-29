@@ -4,7 +4,7 @@ This document outlines all tasks required to complete the Moppy floor mopping ro
 
 ## Simulation
 
-- [ ] Set up Gazebo simulation environment
+- [ ] Set up Webots simulation environment
 - [ ] Create 3D room models with various layouts and obstacles
 - [ ] Implement robot model with accurate physical properties
 - [ ] Configure LIDAR sensor simulation
