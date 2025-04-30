@@ -1,0 +1,1 @@
+ament_prepend_unique_value GAZEBO_RESOURCE_PATH "$AMENT_CURRENT_PREFIX/share/andino_gz_classic/worlds"

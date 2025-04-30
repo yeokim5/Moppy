@@ -1,0 +1,13 @@
+Metadata-Version: 2.1
+Name: node-remover-plugin
+Version: 0.0.1
+Summary: Plugin for webots Supervisor robot to remove specific nodes from a robot in the simulation.
+Home-page: UNKNOWN
+Maintainer: Ignacio Davila Gallesio
+Maintainer-email: ignacio.davila@ekumenlabs.com
+License: BSD Clause 3
+Platform: UNKNOWN
+License-File: LICENSE
+
+UNKNOWN
+

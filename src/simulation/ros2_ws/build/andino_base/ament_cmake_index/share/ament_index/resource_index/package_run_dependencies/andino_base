@@ -1,0 +1,1 @@
+hardware_interface;libgflags-dev;libserial-dev;rclcpp;rclcpp_lifecycle;pluginlib;controller_manager;joint_state_broadcaster;ament_cmake_clang_format

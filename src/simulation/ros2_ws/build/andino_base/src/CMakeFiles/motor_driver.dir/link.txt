@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC -shared -Wl,-soname,libmotor_driver.so -o libmotor_driver.so CMakeFiles/motor_driver.dir/motor_driver.cpp.o  -L/usr/lib/x86_64-linux-gnu -lserial -pthread 

@@ -1,0 +1,3 @@
+[console_scripts]
+node_remover_plugin = node_remover_plugin.node_remover_plugin:main
+

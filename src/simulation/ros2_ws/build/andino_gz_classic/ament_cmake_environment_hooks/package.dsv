@@ -1,0 +1,4 @@
+source;share/andino_gz_classic/local_setup.bash
+source;share/andino_gz_classic/local_setup.dsv
+source;share/andino_gz_classic/local_setup.sh
+source;share/andino_gz_classic/local_setup.zsh

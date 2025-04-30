@@ -1,0 +1,695 @@
+#VRML_SIM R2023b utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/floors/protos/Floor.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/appearances/protos/Parquetry.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/appearances/protos/ConcreteMaterial.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/apartment_structure/protos/Wall.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/appearances/protos/Roughcast.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/apartment_structure/protos/Window.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/appearances/protos/MattePaint.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/apartment_structure/protos/Door.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/apartment_structure/protos/DoorLever.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/factory/containers/protos/WoodenBox.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/factory/containers/protos/CardboardBox.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/factory/pallet/protos/WoodenPalletStack.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/factory/pallet/protos/WoodenPallet.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/factory/fire_extinguisher/protos/FireExtinguisher.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/tables/protos/Table.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/chairs/protos/OfficeChair.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/computers/protos/Monitor.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/computers/protos/Keyboard.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/lights/protos/CeilingLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/traffic/protos/WarningPanel.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/obstacles/protos/OilBarrel.proto"
+
+WorldInfo {
+  info [
+    "Warehouse environment with shelving, storage areas and pathways for indoor navigation testing"
+  ]
+  title "Warehouse World"
+  basicTimeStep 20
+}
+
+Viewpoint {
+  orientation -0.35 0.3 0.887 1.7
+  position 0.0 -25.0 20.0
+  near 0.5
+  follow "andino"
+  followType "None"
+  followSmoothness 0.1
+}
+
+TexturedBackground {
+  texture "factory"
+  skyColor [
+    0.2 0.2 0.2
+  ]
+}
+
+Floor {
+  translation 0 0 0
+  size 30 30
+  appearance ConcreteMaterial {
+    textureTransform TextureTransform {
+      scale 10 10
+    }
+  }
+}
+
+# Main Walls
+Wall {
+  translation 0 15 0
+  name "north wall"
+  size 30 0.2 6.0
+  appearance Roughcast {
+    colorOverride 0.45 0.45 0.45
+    textureTransform TextureTransform {
+      scale 3 3
+    }
+  }
+}
+
+Wall {
+  translation 0 -15 0
+  name "south wall"
+  size 30 0.2 6.0
+  appearance Roughcast {
+    colorOverride 0.45 0.45 0.45
+    textureTransform TextureTransform {
+      scale 3 3
+    }
+  }
+}
+
+Wall {
+  translation 15 0 0
+  name "east wall"
+  rotation 0 0 1 1.5708
+  size 30 0.2 6.0
+  appearance Roughcast {
+    colorOverride 0.45 0.45 0.45
+    textureTransform TextureTransform {
+      scale 3 3
+    }
+  }
+}
+
+Wall {
+  translation -15 0 0
+  name "west wall"
+  rotation 0 0 1 1.5708
+  size 30 0.2 6.0
+  appearance Roughcast {
+    colorOverride 0.45 0.45 0.45
+    textureTransform TextureTransform {
+      scale 3 3
+    }
+  }
+}
+
+# Office area in the corner
+Wall {
+  translation -10 10 0
+  name "office wall 1"
+  size 10 0.2 3.0
+  appearance Roughcast {
+    colorOverride 0.65 0.65 0.65
+    textureTransform TextureTransform {
+      scale 3 3
+    }
+  }
+}
+
+Wall {
+  translation -5 5 0
+  name "office wall 2"
+  rotation 0 0 1 1.5708
+  size 10 0.2 3.0
+  appearance Roughcast {
+    colorOverride 0.65 0.65 0.65
+    textureTransform TextureTransform {
+      scale 3 3
+    }
+  }
+}
+
+Door {
+  translation -5 10 0
+  rotation 0 0 1 0
+  name "office door"
+  size 0.2 1.2 2.4
+  frameAppearance MattePaint {
+    baseColor 0.13 0.13 0.13
+  }
+  doorHandle DoorLever {
+    translation 0.07 0.05 0
+    rotation 0 0 -1 0
+    hasStaticParent TRUE
+  }
+}
+
+Window {
+  translation -5 7 0
+  rotation 0 0 1 1.5708
+  name "office window"
+  size 0.2 2.0 1.5
+  bottomWallHeight 1.0
+  frameAppearance MattePaint {
+    baseColor 0.13 0.13 0.13
+  }
+}
+
+# Office furniture
+Table {
+  translation -8 13 0
+  size 1.8 0.8 0.74
+}
+
+Table {
+  translation -12 8 0
+  name "table 2"
+  size 1.8 0.8 0.74
+}
+
+OfficeChair {
+  translation -8 12 0
+}
+
+OfficeChair {
+  translation -12 7 0
+  name "office chair 2"
+}
+
+Monitor {
+  translation -8 13.2 0.74
+}
+
+Keyboard {
+  translation -8 12.8 0.74
+}
+
+# Large shelving units (using walls)
+# First row
+Wall {
+  translation -10 -5 0
+  name "shelf 1 base 1"
+  size 10 0.6 0.4
+  appearance MattePaint {
+    baseColor 0.2 0.2 0.2
+  }
+}
+
+Wall {
+  translation -10 -5 1.4
+  name "shelf 1 level 1"
+  size 10 0.6 0.1
+  appearance MattePaint {
+    baseColor 0.2 0.2 0.2
+  }
+}
+
+Wall {
+  translation -10 -5 2.8
+  name "shelf 1 level 2"
+  size 10 0.6 0.1
+  appearance MattePaint {
+    baseColor 0.2 0.2 0.2
+  }
+}
+
+Wall {
+  translation -10 -10 0
+  name "shelf 2 base 1"
+  size 10 0.6 0.4
+  appearance MattePaint {
+    baseColor 0.2 0.2 0.2
+  }
+}
+
+Wall {
+  translation -10 -10 1.4
+  name "shelf 2 level 1"
+  size 10 0.6 0.1
+  appearance MattePaint {
+    baseColor 0.2 0.2 0.2
+  }
+}
+
+Wall {
+  translation -10 -10 2.8
+  name "shelf 2 level 2"
+  size 10 0.6 0.1
+  appearance MattePaint {
+    baseColor 0.2 0.2 0.2
+  }
+}
+
+# Second row
+Wall {
+  translation 0 -5 0
+  name "shelf 3 base 1"
+  size 10 0.6 0.4
+  appearance MattePaint {
+    baseColor 0.2 0.2 0.2
+  }
+}
+
+Wall {
+  translation 0 -5 1.4
+  name "shelf 3 level 1"
+  size 10 0.6 0.1
+  appearance MattePaint {
+    baseColor 0.2 0.2 0.2
+  }
+}
+
+Wall {
+  translation 0 -5 2.8
+  name "shelf 3 level 2"
+  size 10 0.6 0.1
+  appearance MattePaint {
+    baseColor 0.2 0.2 0.2
+  }
+}
+
+Wall {
+  translation 0 -10 0
+  name "shelf 4 base 1"
+  size 10 0.6 0.4
+  appearance MattePaint {
+    baseColor 0.2 0.2 0.2
+  }
+}
+
+Wall {
+  translation 0 -10 1.4
+  name "shelf 4 level 1"
+  size 10 0.6 0.1
+  appearance MattePaint {
+    baseColor 0.2 0.2 0.2
+  }
+}
+
+Wall {
+  translation 0 -10 2.8
+  name "shelf 4 level 2"
+  size 10 0.6 0.1
+  appearance MattePaint {
+    baseColor 0.2 0.2 0.2
+  }
+}
+
+# Third row
+Wall {
+  translation 10 -5 0
+  name "shelf 5 base 1"
+  size 10 0.6 0.4
+  appearance MattePaint {
+    baseColor 0.2 0.2 0.2
+  }
+}
+
+Wall {
+  translation 10 -5 1.4
+  name "shelf 5 level 1"
+  size 10 0.6 0.1
+  appearance MattePaint {
+    baseColor 0.2 0.2 0.2
+  }
+}
+
+Wall {
+  translation 10 -5 2.8
+  name "shelf 5 level 2"
+  size 10 0.6 0.1
+  appearance MattePaint {
+    baseColor 0.2 0.2 0.2
+  }
+}
+
+Wall {
+  translation 10 -10 0
+  name "shelf 6 base 1"
+  size 10 0.6 0.4
+  appearance MattePaint {
+    baseColor 0.2 0.2 0.2
+  }
+}
+
+Wall {
+  translation 10 -10 1.4
+  name "shelf 6 level 1"
+  size 10 0.6 0.1
+  appearance MattePaint {
+    baseColor 0.2 0.2 0.2
+  }
+}
+
+Wall {
+  translation 10 -10 2.8
+  name "shelf 6 level 2"
+  size 10 0.6 0.1
+  appearance MattePaint {
+    baseColor 0.2 0.2 0.2
+  }
+}
+
+# Items on shelves
+CardboardBox {
+  translation -13 -5 0.6
+  size 0.6 0.4 0.4
+}
+
+CardboardBox {
+  translation -11 -5 0.6
+  name "cardboard box 2"
+  size 0.6 0.4 0.4
+}
+
+CardboardBox {
+  translation -9 -5 0.6
+  name "cardboard box 3"
+  size 0.6 0.4 0.4
+}
+
+CardboardBox {
+  translation -7 -5 0.6
+  name "cardboard box 4"
+  size 0.6 0.4 0.4
+}
+
+WoodenBox {
+  translation -13 -5 2.0
+  size 0.6 0.4 0.4
+}
+
+WoodenBox {
+  translation -11 -5 2.0
+  name "wooden box 2"
+  size 0.6 0.4 0.4
+}
+
+WoodenBox {
+  translation -9 -5 2.0
+  name "wooden box 3"
+  size 0.6 0.4 0.4
+}
+
+CardboardBox {
+  translation -13 -10 0.6
+  name "cardboard box 5"
+  size 0.6 0.4 0.4
+}
+
+CardboardBox {
+  translation -11 -10 0.6
+  name "cardboard box 6"
+  size 0.6 0.4 0.4
+}
+
+CardboardBox {
+  translation -9 -10 0.6
+  name "cardboard box 7"
+  size 0.6 0.4 0.4
+}
+
+CardboardBox {
+  translation -7 -10 0.6
+  name "cardboard box 8"
+  size 0.6 0.4 0.4
+}
+
+CardboardBox {
+  translation -13 -10 2.0
+  name "cardboard box 9"
+  size 0.6 0.4 0.4
+}
+
+CardboardBox {
+  translation -11 -10 2.0
+  name "cardboard box 10"
+  size 0.6 0.4 0.4
+}
+
+CardboardBox {
+  translation -9 -10 2.0
+  name "cardboard box 11"
+  size 0.6 0.4 0.4
+}
+
+CardboardBox {
+  translation -7 -10 2.0
+  name "cardboard box 12"
+  size 0.6 0.4 0.4
+}
+
+CardboardBox {
+  translation -3 -5 0.6
+  name "cardboard box 13"
+  size 0.6 0.4 0.4
+}
+
+CardboardBox {
+  translation -1 -5 0.6
+  name "cardboard box 14"
+  size 0.6 0.4 0.4
+}
+
+CardboardBox {
+  translation 1 -5 0.6
+  name "cardboard box 15"
+  size 0.6 0.4 0.4
+}
+
+CardboardBox {
+  translation 3 -5 0.6
+  name "cardboard box 16"
+  size 0.6 0.4 0.4
+}
+
+WoodenBox {
+  translation -3 -5 2.0
+  name "wooden box 4"
+  size 0.6 0.4 0.4
+}
+
+WoodenBox {
+  translation -1 -5 2.0
+  name "wooden box 5"
+  size 0.6 0.4 0.4
+}
+
+WoodenBox {
+  translation 1 -5 2.0
+  name "wooden box 6"
+  size 0.6 0.4 0.4
+}
+
+WoodenBox {
+  translation 3 -5 2.0
+  name "wooden box 7"
+  size 0.6 0.4 0.4
+}
+
+CardboardBox {
+  translation -3 -10 0.6
+  name "cardboard box 17"
+  size 0.6 0.4 0.4
+}
+
+CardboardBox {
+  translation -1 -10 0.6
+  name "cardboard box 18"
+  size 0.6 0.4 0.4
+}
+
+CardboardBox {
+  translation 1 -10 0.6
+  name "cardboard box 19"
+  size 0.6 0.4 0.4
+}
+
+CardboardBox {
+  translation 3 -10 0.6
+  name "cardboard box 20"
+  size 0.6 0.4 0.4
+}
+
+WoodenBox {
+  translation -3 -10 2.0
+  name "wooden box 8"
+  size 0.6 0.4 0.4
+}
+
+WoodenBox {
+  translation -1 -10 2.0
+  name "wooden box 9"
+  size 0.6 0.4 0.4
+}
+
+WoodenBox {
+  translation 1 -10 2.0
+  name "wooden box 10"
+  size 0.6 0.4 0.4
+}
+
+WoodenBox {
+  translation 3 -10 2.0
+  name "wooden box 11"
+  size 0.6 0.4 0.4
+}
+
+# Pallet stacks and other objects in storage area
+WoodenPalletStack {
+  translation 10 10 0
+  numberOfPallets 8
+}
+
+WoodenPalletStack {
+  translation 5 10 0
+  name "wooden pallet stack 2"
+  numberOfPallets 6
+}
+
+WoodenPallet {
+  translation 10 5 0
+}
+
+WoodenPallet {
+  translation 7 5 0
+  name "wooden pallet 2"
+}
+
+WoodenPallet {
+  translation 4 5 0
+  name "wooden pallet 3"
+}
+
+# Oil barrels
+OilBarrel {
+  translation 13 -7 0
+}
+
+OilBarrel {
+  translation 13 -8 0
+  name "oil barrel 2"
+}
+
+OilBarrel {
+  translation 13 -9 0
+  name "oil barrel 3"
+}
+
+OilBarrel {
+  translation 12 -7 0
+  name "oil barrel 4"
+}
+
+OilBarrel {
+  translation 12 -8 0
+  name "oil barrel 5"
+}
+
+OilBarrel {
+  translation 12 -9 0
+  name "oil barrel 6"
+}
+
+# Warning signs and fire extinguishers
+WarningPanel {
+  translation -5 0 0.01
+  rotation 0 0 1 1.5708
+  size 0.8 0.8
+}
+
+WarningPanel {
+  translation 5 0 0.01
+  rotation 0 0 1 1.5708
+  name "warning panel 2"
+  size 0.8 0.8
+}
+
+FireExtinguisher {
+  translation -14.8 10 0
+}
+
+FireExtinguisher {
+  translation -14.8 -10 0
+  name "fire extinguisher 2"
+}
+
+FireExtinguisher {
+  translation 14.8 10 0
+  name "fire extinguisher 3"
+}
+
+FireExtinguisher {
+  translation 14.8 -10 0
+  name "fire extinguisher 4"
+}
+
+# Ceiling lights
+CeilingLight {
+  translation 0 0 5.9
+  name "main light"
+  bulbColor 1 1 1
+  pointLightIntensity 10
+  pointLightCastShadows TRUE
+}
+
+CeilingLight {
+  translation -10 10 2.9
+  name "office light"
+  bulbColor 1 1 1
+  pointLightIntensity 3
+}
+
+CeilingLight {
+  translation -10 -5 5.9
+  name "shelf area light 1"
+  bulbColor 1 1 1
+  pointLightIntensity 5
+}
+
+CeilingLight {
+  translation 0 -5 5.9
+  name "shelf area light 2"
+  bulbColor 1 1 1
+  pointLightIntensity 5
+}
+
+CeilingLight {
+  translation 10 -5 5.9
+  name "shelf area light 3"
+  bulbColor 1 1 1
+  pointLightIntensity 5
+}
+
+CeilingLight {
+  translation -10 -10 5.9
+  name "shelf area light 4"
+  bulbColor 1 1 1
+  pointLightIntensity 5
+}
+
+CeilingLight {
+  translation 0 -10 5.9
+  name "shelf area light 5"
+  bulbColor 1 1 1
+  pointLightIntensity 5
+}
+
+CeilingLight {
+  translation 10 -10 5.9
+  name "shelf area light 6"
+  bulbColor 1 1 1
+  pointLightIntensity 5
+}
+
+CeilingLight {
+  translation 10 10 5.9
+  name "storage area light"
+  bulbColor 1 1 1
+  pointLightIntensity 5
+} 

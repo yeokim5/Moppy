@@ -1,0 +1,6 @@
+# generated from colcon_core/shell/template/command_prefix.sh.em
+. "/home/yeokim/ros2_ws/install/andino_base/share/andino_base/package.sh"
+. "/home/yeokim/ros2_ws/install/andino_description/share/andino_description/package.sh"
+. "/home/yeokim/ros2_ws/install/node_remover_plugin/share/node_remover_plugin/package.sh"
+. "/home/yeokim/ros2_ws/install/andino_control/share/andino_control/package.sh"
+. "/home/yeokim/ros2_ws/install/andino_gz_classic/share/andino_gz_classic/package.sh"
