@@ -1,0 +1,134 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-8ec80866c65266f708d3.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						4
+					]
+				},
+				{
+					"build" : "applications",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-applications-d8b78e747ebab94843f0.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "applications",
+					"targetIndexes" : 
+					[
+						3
+					]
+				},
+				{
+					"build" : "src",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-src-e9ce5dcad77276b9e5dd.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "src",
+					"targetIndexes" : 
+					[
+						1,
+						2
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1,
+						2
+					],
+					"name" : "andino_base",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "andino_base_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-andino_base_uninstall-12118cd662f2560400ed.json",
+					"name" : "andino_base_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "diffdrive_andino::@145eef247bfb46b6828c",
+					"jsonFile" : "target-diffdrive_andino-69daf4080eeeaf4a867e.json",
+					"name" : "diffdrive_andino",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "motor_driver::@145eef247bfb46b6828c",
+					"jsonFile" : "target-motor_driver-3a764c4d4dcd58899c2e.json",
+					"name" : "motor_driver",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "motor_driver_demo::@b122ace3dc882242dbb5",
+					"jsonFile" : "target-motor_driver_demo-728c4b66b006d72729e6.json",
+					"name" : "motor_driver_demo",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-72eda8de306d0172bf46.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/yeokim/Moppy/src/simulation/ros2_ws/build/andino_base",
+		"source" : "/home/yeokim/Moppy/src/simulation/ros2_ws/src/andino_webots/submodules/andino/andino_base"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

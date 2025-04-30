@@ -1,8 +1,8 @@
-# Install script for directory: /home/yeokim/ros2_ws/src/andino_webots/andino_webots
+# Install script for directory: /home/yeokim/Moppy/src/simulation/ros2_ws/src/andino_webots/andino_webots
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/yeokim/ros2_ws/install/andino_webots")
+  set(CMAKE_INSTALL_PREFIX "/home/yeokim/Moppy/src/simulation/ros2_ws/install/andino_webots")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -43,7 +43,71 @@ if(NOT DEFINED CMAKE_OBJDUMP)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  include("/home/yeokim/ros2_ws/build/andino_webots/ament_cmake_symlink_install/ament_cmake_symlink_install.cmake")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/andino_webots/" TYPE DIRECTORY FILES
+    "/home/yeokim/Moppy/src/simulation/ros2_ws/src/andino_webots/andino_webots/launch"
+    "/home/yeokim/Moppy/src/simulation/ros2_ws/src/andino_webots/andino_webots/urdf"
+    "/home/yeokim/Moppy/src/simulation/ros2_ws/src/andino_webots/andino_webots/rviz"
+    "/home/yeokim/Moppy/src/simulation/ros2_ws/src/andino_webots/andino_webots/worlds"
+    )
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ament_index/resource_index/package_run_dependencies" TYPE FILE FILES "/home/yeokim/Moppy/src/simulation/ros2_ws/build/andino_webots/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/andino_webots")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ament_index/resource_index/parent_prefix_path" TYPE FILE FILES "/home/yeokim/Moppy/src/simulation/ros2_ws/build/andino_webots/ament_cmake_index/share/ament_index/resource_index/parent_prefix_path/andino_webots")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/andino_webots/environment" TYPE FILE FILES "/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/ament_prefix_path.sh")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/andino_webots/environment" TYPE FILE FILES "/home/yeokim/Moppy/src/simulation/ros2_ws/build/andino_webots/ament_cmake_environment_hooks/ament_prefix_path.dsv")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/andino_webots/environment" TYPE FILE FILES "/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/path.sh")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/andino_webots/environment" TYPE FILE FILES "/home/yeokim/Moppy/src/simulation/ros2_ws/build/andino_webots/ament_cmake_environment_hooks/path.dsv")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/andino_webots" TYPE FILE FILES "/home/yeokim/Moppy/src/simulation/ros2_ws/build/andino_webots/ament_cmake_environment_hooks/local_setup.bash")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/andino_webots" TYPE FILE FILES "/home/yeokim/Moppy/src/simulation/ros2_ws/build/andino_webots/ament_cmake_environment_hooks/local_setup.sh")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/andino_webots" TYPE FILE FILES "/home/yeokim/Moppy/src/simulation/ros2_ws/build/andino_webots/ament_cmake_environment_hooks/local_setup.zsh")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/andino_webots" TYPE FILE FILES "/home/yeokim/Moppy/src/simulation/ros2_ws/build/andino_webots/ament_cmake_environment_hooks/local_setup.dsv")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/andino_webots" TYPE FILE FILES "/home/yeokim/Moppy/src/simulation/ros2_ws/build/andino_webots/ament_cmake_environment_hooks/package.dsv")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ament_index/resource_index/packages" TYPE FILE FILES "/home/yeokim/Moppy/src/simulation/ros2_ws/build/andino_webots/ament_cmake_index/share/ament_index/resource_index/packages/andino_webots")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/andino_webots/cmake" TYPE FILE FILES
+    "/home/yeokim/Moppy/src/simulation/ros2_ws/build/andino_webots/ament_cmake_core/andino_webotsConfig.cmake"
+    "/home/yeokim/Moppy/src/simulation/ros2_ws/build/andino_webots/ament_cmake_core/andino_webotsConfig-version.cmake"
+    )
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/andino_webots" TYPE FILE FILES "/home/yeokim/Moppy/src/simulation/ros2_ws/src/andino_webots/andino_webots/package.xml")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -54,5 +118,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/yeokim/ros2_ws/build/andino_webots/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/yeokim/Moppy/src/simulation/ros2_ws/build/andino_webots/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

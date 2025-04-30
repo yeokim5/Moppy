@@ -1,1 +1,37 @@
-/home/yeokim/tmp/Moppy/src/simulation/ros2_ws/src/andino_webots/andino_webots/urdf/andino_webots.urdf
+<?xml version="1.0"?>
+<robot name="Andino Webots">
+    <webots>
+
+        <device reference="camera" type="Camera">
+            <ros>
+                <topicName>/andino_camera</topicName>
+                <alwaysOn>True</alwaysOn>
+                <frameName>webots_camera_link</frameName>
+            </ros>
+        </device>
+
+        <device reference="sensor_ray_front" type="Lidar">
+            <ros>
+                <topicName>/andino_scan</topicName>
+                <alwaysOn>True</alwaysOn>
+                <frameName>rplidar_laser_link</frameName>
+            </ros>
+        </device>
+
+        <plugin type="webots_ros2_control::Ros2Control" />
+    </webots>
+
+    <ros2_control name="WebotsControl" type="system">
+        <hardware>
+            <plugin>webots_ros2_control::Ros2ControlSystem</plugin>
+        </hardware>
+        <joint name="right_wheel_joint">
+            <state_interface name="position"/>
+            <command_interface name="velocity"/>
+        </joint>
+        <joint name="left_wheel_joint">
+            <state_interface name="position"/>
+            <command_interface name="velocity"/>
+        </joint>
+    </ros2_control>
+</robot>

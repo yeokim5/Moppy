@@ -1,1 +1,0 @@
-/home/yeokim/tmp/Moppy/src/simulation/ros2_ws/src/andino_webots/andino_webots/launch/spawn_andino_webots_fixed.launch.py

@@ -1,0 +1,23 @@
+{
+  "lidar_files": [
+    "./data/lidar_data_20250430_175912_lidar.csv"
+  ],
+  "camera_files": [
+    "./data/camera_data_20250430_175913_camera_metadata.csv"
+  ],
+  "lidar_validation": {
+    "status": "PASSED",
+    "quality_score": 1.0,
+    "total_readings": 211680,
+    "valid_readings": 211680,
+    "errors": []
+  },
+  "camera_validation": {
+    "status": "PASSED",
+    "quality_score": 1.0,
+    "total_images": 144,
+    "valid_images": 144,
+    "errors": []
+  },
+  "overall_result": "PASSED"
+}

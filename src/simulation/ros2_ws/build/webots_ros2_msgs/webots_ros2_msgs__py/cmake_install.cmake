@@ -1,8 +1,8 @@
-# Install script for directory: /home/yeokim/ros2_ws/build/webots_ros2_msgs/webots_ros2_msgs__py
+# Install script for directory: /home/yeokim/Moppy/src/simulation/ros2_ws/build/webots_ros2_msgs/webots_ros2_msgs__py
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/yeokim/ros2_ws/install/webots_ros2_msgs")
+  set(CMAKE_INSTALL_PREFIX "/home/yeokim/Moppy/src/simulation/ros2_ws/install/webots_ros2_msgs")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 

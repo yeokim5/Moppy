@@ -1,8 +1,8 @@
-# Install script for directory: /home/yeokim/ros2_ws/src/andino_webots/submodules/andino/andino_base/src
+# Install script for directory: /home/yeokim/Moppy/src/simulation/ros2_ws/src/andino_webots/submodules/andino/andino_base/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/yeokim/ros2_ws/install/andino_base")
+  set(CMAKE_INSTALL_PREFIX "/home/yeokim/Moppy/src/simulation/ros2_ws/install/andino_base")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -49,12 +49,12 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libdiffdrive_andino.so"
          RPATH "")
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/home/yeokim/ros2_ws/build/andino_base/src/libdiffdrive_andino.so")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/home/yeokim/Moppy/src/simulation/ros2_ws/build/andino_base/src/libdiffdrive_andino.so")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libdiffdrive_andino.so" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libdiffdrive_andino.so")
     file(RPATH_CHANGE
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libdiffdrive_andino.so"
-         OLD_RPATH "/opt/ros/humble/lib:/home/yeokim/ros2_ws/build/andino_base/src:"
+         OLD_RPATH "/opt/ros/humble/lib:/home/yeokim/Moppy/src/simulation/ros2_ws/build/andino_base/src:"
          NEW_RPATH "")
     if(CMAKE_INSTALL_DO_STRIP)
       execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libdiffdrive_andino.so")
@@ -72,7 +72,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libmotor_driver.so"
          RPATH "")
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/home/yeokim/ros2_ws/build/andino_base/src/libmotor_driver.so")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/home/yeokim/Moppy/src/simulation/ros2_ws/build/andino_base/src/libmotor_driver.so")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libmotor_driver.so" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libmotor_driver.so")
     if(CMAKE_INSTALL_DO_STRIP)
@@ -89,6 +89,6 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/andino_base/environment" TYPE FILE FILES "/home/yeokim/ros2_ws/build/andino_base/ament_cmake_environment_hooks/library_path.dsv")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/andino_base/environment" TYPE FILE FILES "/home/yeokim/Moppy/src/simulation/ros2_ws/build/andino_base/ament_cmake_environment_hooks/library_path.dsv")
 endif()
 

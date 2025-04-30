@@ -1,1 +1,403 @@
-/home/yeokim/tmp/Moppy/src/simulation/ros2_ws/src/andino_webots/andino_webots/worlds/apartment.wbt
+#VRML_SIM R2023b utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/floors/protos/Floor.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/appearances/protos/Parquetry.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/apartment_structure/protos/Wall.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/appearances/protos/Roughcast.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/apartment_structure/protos/Window.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/appearances/protos/MattePaint.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/apartment_structure/protos/Door.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/apartment_structure/protos/DoorLever.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/living_room_furniture/protos/Sofa.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/plants/protos/PottedTree.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/kitchen/components/protos/Sink.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/tables/protos/Table.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/chairs/protos/Chair.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/kitchen/refrigerator/protos/Refrigerator.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/living_room_furniture/protos/Armchair.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/bedroom/protos/Bed.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/cabinet/protos/Cabinet.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/lights/protos/CeilingLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/lights/protos/FloorLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/objects/kitchen/oven/protos/Oven.proto"
+
+WorldInfo {
+  info [
+    "Multi-room apartment environment for indoor navigation testing"
+  ]
+  title "Apartment World"
+  basicTimeStep 20
+}
+
+Viewpoint {
+  orientation -0.25 0.2 0.96 1.8
+  position -0.5 -8.0 6.0
+  near 0.5
+  follow "andino"
+  followType "None"
+  followSmoothness 0.1
+}
+
+TexturedBackground {
+  texture "empty_office"
+  skyColor [
+    0.2 0.2 0.2
+  ]
+}
+
+Floor {
+  translation 0 0 0
+  size 15 15
+  appearance Parquetry {
+    type "light strip"
+    textureTransform TextureTransform {
+      scale 0.5 0.5
+    }
+  }
+}
+
+# Main Walls
+Wall {
+  translation 0 7.5 0
+  name "north wall"
+  size 15 0.1 2.4
+  appearance Roughcast {
+    colorOverride 0.9 0.9 0.9
+    textureTransform TextureTransform {
+      scale 3 3
+    }
+  }
+}
+
+Wall {
+  translation 0 -7.5 0
+  name "south wall"
+  size 15 0.1 2.4
+  appearance Roughcast {
+    colorOverride 0.9 0.9 0.9
+    textureTransform TextureTransform {
+      scale 3 3
+    }
+  }
+}
+
+Wall {
+  translation 7.5 0 0
+  name "east wall"
+  rotation 0 0 1 1.5708
+  size 15 0.1 2.4
+  appearance Roughcast {
+    colorOverride 0.9 0.9 0.9
+    textureTransform TextureTransform {
+      scale 3 3
+    }
+  }
+}
+
+Wall {
+  translation -7.5 0 0
+  name "west wall"
+  rotation 0 0 1 1.5708
+  size 15 0.1 2.4
+  appearance Roughcast {
+    colorOverride 0.9 0.9 0.9
+    textureTransform TextureTransform {
+      scale 3 3
+    }
+  }
+}
+
+# Internal walls
+Wall {
+  translation -2.5 0 0
+  name "central corridor wall 1"
+  rotation 0 0 1 1.5708
+  size 15 0.1 2.4
+  appearance Roughcast {
+    colorOverride 0.9 0.9 0.9
+    textureTransform TextureTransform {
+      scale 3 3
+    }
+  }
+}
+
+Door {
+  translation -2.5 2.5 0
+  rotation 0 0 1 1.5708
+  name "door to living room"
+  size 0.1 1.0 2.4
+  frameAppearance MattePaint {
+    baseColor 0.13 0.062 0.0
+  }
+  doorHandle DoorLever {
+    translation 0.07 0.05 0
+    rotation 0 0 -1 1.5708
+    hasStaticParent TRUE
+  }
+}
+
+Door {
+  translation -2.5 -2.5 0
+  rotation 0 0 1 1.5708
+  name "door to kitchen"
+  size 0.1 1.0 2.4
+  frameAppearance MattePaint {
+    baseColor 0.13 0.062 0.0
+  }
+  doorHandle DoorLever {
+    translation 0.07 0.05 0
+    rotation 0 0 -1 1.5708
+    hasStaticParent TRUE
+  }
+}
+
+Wall {
+  translation 0 0 0
+  name "bedroom divider wall"
+  rotation 0 0 1 0
+  size 5 0.1 2.4
+  appearance Roughcast {
+    colorOverride 0.9 0.9 0.9
+    textureTransform TextureTransform {
+      scale 3 3
+    }
+  }
+}
+
+Door {
+  translation 2.5 0 0
+  rotation 0 0 1 0
+  name "door between bedrooms"
+  size 0.1 1.0 2.4
+  frameAppearance MattePaint {
+    baseColor 0.13 0.062 0.0
+  }
+  doorHandle DoorLever {
+    translation 0.07 0.05 0
+    rotation 0 0 -1 0
+    hasStaticParent TRUE
+  }
+}
+
+Door {
+  translation -2.5 5.5 0
+  rotation 0 0 1 1.5708
+  name "door to bedroom 1"
+  size 0.1 1.0 2.4
+  frameAppearance MattePaint {
+    baseColor 0.13 0.062 0.0
+  }
+  doorHandle DoorLever {
+    translation 0.07 0.05 0
+    rotation 0 0 -1 1.5708
+    hasStaticParent TRUE
+  }
+}
+
+Door {
+  translation -2.5 -5.5 0
+  rotation 0 0 1 1.5708
+  name "door to bedroom 2"
+  size 0.1 1.0 2.4
+  frameAppearance MattePaint {
+    baseColor 0.13 0.062 0.0
+  }
+  doorHandle DoorLever {
+    translation 0.07 0.05 0
+    rotation 0 0 -1 1.5708
+    hasStaticParent TRUE
+  }
+}
+
+Window {
+  translation 7.5 3.0 0
+  rotation 0 0 1 1.5708
+  name "east window 1"
+  size 0.1 2.0 1.2
+  bottomWallHeight 1.0
+  frameAppearance MattePaint {
+    baseColor 0.13 0.062 0.0
+  }
+}
+
+Window {
+  translation 7.5 -3.0 0
+  rotation 0 0 1 1.5708
+  name "east window 2"
+  size 0.1 2.0 1.2
+  bottomWallHeight 1.0
+  frameAppearance MattePaint {
+    baseColor 0.13 0.062 0.0
+  }
+}
+
+Window {
+  translation -7.5 3.0 0
+  rotation 0 0 1 1.5708
+  name "west window 1"
+  size 0.1 2.0 1.2
+  bottomWallHeight 1.0
+  frameAppearance MattePaint {
+    baseColor 0.13 0.062 0.0
+  }
+}
+
+Window {
+  translation -7.5 -3.0 0
+  rotation 0 0 1 1.5708
+  name "west window 2"
+  size 0.1 2.0 1.2
+  bottomWallHeight 1.0
+  frameAppearance MattePaint {
+    baseColor 0.13 0.062 0.0
+  }
+}
+
+# Living room furniture (right front)
+Sofa {
+  translation -5.0 3.5 0
+  rotation 0 0 1 1.5708
+}
+
+Table {
+  translation -5.0 5.0 0
+  size 1.2 0.8 0.5
+}
+
+Armchair {
+  translation -4.0 5.5 0
+  rotation 0 0 1 -2.0
+}
+
+FloorLight {
+  translation -6.5 6.5 0
+  bulbColor 1 1 0.8
+  pointLightColor 1 1 0.8
+  pointLightIntensity 3
+  pointLightCastShadows TRUE
+}
+
+PottedTree {
+  translation -7.0 1.0 0
+  scale 2 2 2
+}
+
+# Kitchen (right back)
+Refrigerator {
+  translation -5.0 -6.5 0
+}
+
+Table {
+  translation -5.0 -4.0 0
+  name "kitchen table"
+  size 1.5 1.5 0.7
+}
+
+Chair {
+  translation -5.5 -3.0 0
+  rotation 0 0 1 0
+}
+
+Chair {
+  translation -4.5 -3.0 0
+  rotation 0 0 1 0
+  name "chair 2"
+}
+
+Chair {
+  translation -6.0 -4.0 0
+  rotation 0 0 1 1.5708
+  name "chair 3"
+}
+
+Sink {
+  translation -6.5 -5.5 0.7
+  rotation 0 0 1 1.5708
+}
+
+Oven {
+  translation -5.0 -5.5 0
+}
+
+# Bedroom 1 (left front)
+Bed {
+  translation 5.0 5.0 0
+  rotation 0 0 1 -1.5708
+}
+
+Cabinet {
+  translation 6.5 6.5 0
+  rotation 0 0 1 -2.35
+  depth 0.4
+  outerThickness 0.02
+  rowsHeights [
+    0.52, 0.44, 0.44, 0.44, 0.44
+  ]
+  columnsWidths [
+    0.96
+  ]
+}
+
+FloorLight {
+  translation 6.5 3.0 0
+  name "floor light 2"
+  bulbColor 1 0.9 0.8
+  pointLightColor 1 0.9 0.8
+  pointLightIntensity 2
+}
+
+# Bedroom 2 (left back)
+Bed {
+  translation 5.0 -5.0 0
+  rotation 0 0 1 1.5708
+  name "bed 2"
+}
+
+Table {
+  translation 6.5 -6.0 0
+  name "bedside table"
+  size 0.6 0.6 0.5
+}
+
+Chair {
+  translation 4.0 -3.0 0
+  rotation 0 0 1 3.14
+  name "chair 4"
+}
+
+# Corridor
+CeilingLight {
+  translation -2.5 0 2.35
+  bulbColor 1 1 1
+  pointLightIntensity 5
+  pointLightCastShadows TRUE
+}
+
+CeilingLight {
+  translation 5.0 5.0 2.35
+  name "ceiling light bedroom 1"
+  bulbColor 1 1 1
+  pointLightIntensity 3
+}
+
+CeilingLight {
+  translation 5.0 -5.0 2.35
+  name "ceiling light bedroom 2"
+  bulbColor 1 1 1
+  pointLightIntensity 3
+}
+
+CeilingLight {
+  translation -5.0 5.0 2.35
+  name "ceiling light living room"
+  bulbColor 1 1 1
+  pointLightIntensity 3
+}
+
+CeilingLight {
+  translation -5.0 -5.0 2.35
+  name "ceiling light kitchen"
+  bulbColor 1 1 1
+  pointLightIntensity 3
+} 
