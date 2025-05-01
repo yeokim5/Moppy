@@ -1,1 +1,0 @@
-controller_manager:hardware_interface:joint_state_broadcaster:libgflags-dev:libserial-dev:pluginlib:rclcpp:rclcpp_lifecycle

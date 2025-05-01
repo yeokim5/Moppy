@@ -1,8 +1,0 @@
-source;share/andino_webots/hook/cmake_prefix_path.ps1
-source;share/andino_webots/hook/cmake_prefix_path.dsv
-source;share/andino_webots/hook/cmake_prefix_path.sh
-source;share/andino_webots/local_setup.bash
-source;share/andino_webots/local_setup.dsv
-source;share/andino_webots/local_setup.ps1
-source;share/andino_webots/local_setup.sh
-source;share/andino_webots/local_setup.zsh
