@@ -96,35 +96,28 @@
 
 8. **Capture Sensor Data**
 
-   Install required Python dependencies:
+   Install required  dependencies:
 
    ```bash
    pip install numpy pandas opencv-python matplotlib pillow
+   source /opt/ros/humble/setup.bash && source install/local_setup.bash && export WEBOTS_HOME=/mnt/c/Program\ Files/Webots
+   ```
+   1. Run the robot & map:
+   ```bash
+   ros2 launch andino_webots andino_webots_windows.launch.py
+   or
+   ros2 launch andino_webots launch_webots_world.launch.py world:=andino_webots.wbt
+   ros2 launch andino_webots spawn_andino_webots_winodws.launch.py
    ```
 
-   Create a data directory:
-
+   2. Start SLAM:
    ```bash
-   mkdir -p data
+   ros2 launch andino_slam slam_toolbox_online_async.launch.py
    ```
 
-   Run data collection scripts:
-
+   3. Run data collection:
    ```bash
-   # Start LIDAR data capture
-   ./src/data_capture/lidar_capture.py --output-dir ./data --rate 10.0
-
-   # Start camera data capture (in a different terminal)
-   ./src/data_capture/camera_capture.py --output-dir ./data --rate 5.0
-
-   # Start automated room exploration (in a different terminal)
-   ./src/data_capture/room_simulator.py --room small_apartment --exploration-time 300
-   ```
-
-   Validate the collected data:
-
-   ```bash
-   ./src/data_capture/data_validation.py --data-dir ./data
+   ./src/data_capture/collect_data.sh
    ```
 
 ---

@@ -4,7 +4,7 @@
 
 # Default values
 OUTPUT_DIR="./data"
-DURATION=30  # 5 minutes
+DURATION=30  # for test 30 seconds
 LIDAR_RATE=10.0
 CAMERA_RATE=5.0
 ROOM_TYPE="small_apartment"
