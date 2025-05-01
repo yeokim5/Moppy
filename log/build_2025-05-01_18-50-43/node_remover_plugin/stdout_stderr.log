@@ -1,0 +1,36 @@
+running egg_info
+creating ../../../../../../build/node_remover_plugin/node_remover_plugin.egg-info
+writing ../../../../../../build/node_remover_plugin/node_remover_plugin.egg-info/PKG-INFO
+writing dependency_links to ../../../../../../build/node_remover_plugin/node_remover_plugin.egg-info/dependency_links.txt
+writing entry points to ../../../../../../build/node_remover_plugin/node_remover_plugin.egg-info/entry_points.txt
+writing requirements to ../../../../../../build/node_remover_plugin/node_remover_plugin.egg-info/requires.txt
+writing top-level names to ../../../../../../build/node_remover_plugin/node_remover_plugin.egg-info/top_level.txt
+writing manifest file '../../../../../../build/node_remover_plugin/node_remover_plugin.egg-info/SOURCES.txt'
+reading manifest file '../../../../../../build/node_remover_plugin/node_remover_plugin.egg-info/SOURCES.txt'
+adding license file 'LICENSE'
+writing manifest file '../../../../../../build/node_remover_plugin/node_remover_plugin.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/yeokim/Moppy/build/node_remover_plugin/build
+creating /home/yeokim/Moppy/build/node_remover_plugin/build/lib
+creating /home/yeokim/Moppy/build/node_remover_plugin/build/lib/node_remover_plugin
+copying node_remover_plugin/node_remover_plugin.py -> /home/yeokim/Moppy/build/node_remover_plugin/build/lib/node_remover_plugin
+copying node_remover_plugin/__init__.py -> /home/yeokim/Moppy/build/node_remover_plugin/build/lib/node_remover_plugin
+running install
+running install_lib
+creating /home/yeokim/Moppy/install/node_remover_plugin/lib/python3.10/site-packages/node_remover_plugin
+copying /home/yeokim/Moppy/build/node_remover_plugin/build/lib/node_remover_plugin/node_remover_plugin.py -> /home/yeokim/Moppy/install/node_remover_plugin/lib/python3.10/site-packages/node_remover_plugin
+copying /home/yeokim/Moppy/build/node_remover_plugin/build/lib/node_remover_plugin/__init__.py -> /home/yeokim/Moppy/install/node_remover_plugin/lib/python3.10/site-packages/node_remover_plugin
+byte-compiling /home/yeokim/Moppy/install/node_remover_plugin/lib/python3.10/site-packages/node_remover_plugin/node_remover_plugin.py to node_remover_plugin.cpython-310.pyc
+byte-compiling /home/yeokim/Moppy/install/node_remover_plugin/lib/python3.10/site-packages/node_remover_plugin/__init__.py to __init__.cpython-310.pyc
+running install_data
+creating /home/yeokim/Moppy/install/node_remover_plugin/share/ament_index
+creating /home/yeokim/Moppy/install/node_remover_plugin/share/ament_index/resource_index
+creating /home/yeokim/Moppy/install/node_remover_plugin/share/ament_index/resource_index/packages
+copying resource/node_remover_plugin -> /home/yeokim/Moppy/install/node_remover_plugin/share/ament_index/resource_index/packages
+copying package.xml -> /home/yeokim/Moppy/install/node_remover_plugin/share/node_remover_plugin
+running install_egg_info
+Copying ../../../../../../build/node_remover_plugin/node_remover_plugin.egg-info to /home/yeokim/Moppy/install/node_remover_plugin/lib/python3.10/site-packages/node_remover_plugin-0.0.1-py3.10.egg-info
+running install_scripts
+Installing node_remover_plugin script to /home/yeokim/Moppy/install/node_remover_plugin/lib/node_remover_plugin
+writing list of installed files to '/home/yeokim/Moppy/build/node_remover_plugin/install.log'

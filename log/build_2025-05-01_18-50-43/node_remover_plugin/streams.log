@@ -1,0 +1,38 @@
+[0.503s] Invoking command in '/home/yeokim/Moppy/src/simulation/ros2_ws/src/andino_webots/node_remover_plugin': PYTHONPATH=/home/yeokim/Moppy/build/node_remover_plugin/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/yeokim/Moppy/install/node_remover_plugin/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../../../../../build/node_remover_plugin build --build-base /home/yeokim/Moppy/build/node_remover_plugin/build install --record /home/yeokim/Moppy/build/node_remover_plugin/install.log --single-version-externally-managed install_data
+[0.694s] running egg_info
+[0.694s] creating ../../../../../../build/node_remover_plugin/node_remover_plugin.egg-info
+[0.694s] writing ../../../../../../build/node_remover_plugin/node_remover_plugin.egg-info/PKG-INFO
+[0.695s] writing dependency_links to ../../../../../../build/node_remover_plugin/node_remover_plugin.egg-info/dependency_links.txt
+[0.695s] writing entry points to ../../../../../../build/node_remover_plugin/node_remover_plugin.egg-info/entry_points.txt
+[0.695s] writing requirements to ../../../../../../build/node_remover_plugin/node_remover_plugin.egg-info/requires.txt
+[0.695s] writing top-level names to ../../../../../../build/node_remover_plugin/node_remover_plugin.egg-info/top_level.txt
+[0.695s] writing manifest file '../../../../../../build/node_remover_plugin/node_remover_plugin.egg-info/SOURCES.txt'
+[0.696s] reading manifest file '../../../../../../build/node_remover_plugin/node_remover_plugin.egg-info/SOURCES.txt'
+[0.697s] adding license file 'LICENSE'
+[0.697s] writing manifest file '../../../../../../build/node_remover_plugin/node_remover_plugin.egg-info/SOURCES.txt'
+[0.697s] running build
+[0.697s] running build_py
+[0.697s] creating /home/yeokim/Moppy/build/node_remover_plugin/build
+[0.698s] creating /home/yeokim/Moppy/build/node_remover_plugin/build/lib
+[0.698s] creating /home/yeokim/Moppy/build/node_remover_plugin/build/lib/node_remover_plugin
+[0.698s] copying node_remover_plugin/node_remover_plugin.py -> /home/yeokim/Moppy/build/node_remover_plugin/build/lib/node_remover_plugin
+[0.698s] copying node_remover_plugin/__init__.py -> /home/yeokim/Moppy/build/node_remover_plugin/build/lib/node_remover_plugin
+[0.698s] running install
+[0.699s] running install_lib
+[0.699s] creating /home/yeokim/Moppy/install/node_remover_plugin/lib/python3.10/site-packages/node_remover_plugin
+[0.699s] copying /home/yeokim/Moppy/build/node_remover_plugin/build/lib/node_remover_plugin/node_remover_plugin.py -> /home/yeokim/Moppy/install/node_remover_plugin/lib/python3.10/site-packages/node_remover_plugin
+[0.700s] copying /home/yeokim/Moppy/build/node_remover_plugin/build/lib/node_remover_plugin/__init__.py -> /home/yeokim/Moppy/install/node_remover_plugin/lib/python3.10/site-packages/node_remover_plugin
+[0.700s] byte-compiling /home/yeokim/Moppy/install/node_remover_plugin/lib/python3.10/site-packages/node_remover_plugin/node_remover_plugin.py to node_remover_plugin.cpython-310.pyc
+[0.701s] byte-compiling /home/yeokim/Moppy/install/node_remover_plugin/lib/python3.10/site-packages/node_remover_plugin/__init__.py to __init__.cpython-310.pyc
+[0.701s] running install_data
+[0.701s] creating /home/yeokim/Moppy/install/node_remover_plugin/share/ament_index
+[0.701s] creating /home/yeokim/Moppy/install/node_remover_plugin/share/ament_index/resource_index
+[0.701s] creating /home/yeokim/Moppy/install/node_remover_plugin/share/ament_index/resource_index/packages
+[0.702s] copying resource/node_remover_plugin -> /home/yeokim/Moppy/install/node_remover_plugin/share/ament_index/resource_index/packages
+[0.702s] copying package.xml -> /home/yeokim/Moppy/install/node_remover_plugin/share/node_remover_plugin
+[0.702s] running install_egg_info
+[0.704s] Copying ../../../../../../build/node_remover_plugin/node_remover_plugin.egg-info to /home/yeokim/Moppy/install/node_remover_plugin/lib/python3.10/site-packages/node_remover_plugin-0.0.1-py3.10.egg-info
+[0.705s] running install_scripts
+[0.721s] Installing node_remover_plugin script to /home/yeokim/Moppy/install/node_remover_plugin/lib/node_remover_plugin
+[0.722s] writing list of installed files to '/home/yeokim/Moppy/build/node_remover_plugin/install.log'
+[0.739s] Invoked command in '/home/yeokim/Moppy/src/simulation/ros2_ws/src/andino_webots/node_remover_plugin' returned '0': PYTHONPATH=/home/yeokim/Moppy/build/node_remover_plugin/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/yeokim/Moppy/install/node_remover_plugin/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../../../../../build/node_remover_plugin build --build-base /home/yeokim/Moppy/build/node_remover_plugin/build install --record /home/yeokim/Moppy/build/node_remover_plugin/install.log --single-version-externally-managed install_data

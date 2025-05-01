@@ -1,0 +1,6 @@
+Invoking command in '/home/yeokim/Moppy/build/andino_description': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/yeokim/Moppy/src/simulation/ros2_ws/src/andino_webots/submodules/andino/andino_description -DCMAKE_INSTALL_PREFIX=/home/yeokim/Moppy/install/andino_description
+Invoked command in '/home/yeokim/Moppy/build/andino_description' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/yeokim/Moppy/src/simulation/ros2_ws/src/andino_webots/submodules/andino/andino_description -DCMAKE_INSTALL_PREFIX=/home/yeokim/Moppy/install/andino_description
+Invoking command in '/home/yeokim/Moppy/build/andino_description': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/yeokim/Moppy/build/andino_description -- -j16 -l16
+Invoked command in '/home/yeokim/Moppy/build/andino_description' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/yeokim/Moppy/build/andino_description -- -j16 -l16
+Invoking command in '/home/yeokim/Moppy/build/andino_description': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/yeokim/Moppy/build/andino_description
+Invoked command in '/home/yeokim/Moppy/build/andino_description' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/yeokim/Moppy/build/andino_description

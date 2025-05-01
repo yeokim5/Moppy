@@ -1,0 +1,40 @@
+-- The C compiler identification is GNU 11.4.0
+-- The CXX compiler identification is GNU 11.4.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found ament_cmake: 1.3.11 (/opt/ros/humble/share/ament_cmake/cmake)
+-- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/yeokim/Moppy/build/andino_slam
+-- Install configuration: ""
+-- Installing: /home/yeokim/Moppy/install/andino_slam/share/andino_slam//config
+-- Installing: /home/yeokim/Moppy/install/andino_slam/share/andino_slam//config/slam_toolbox_online_async.yaml
+-- Installing: /home/yeokim/Moppy/install/andino_slam/share/andino_slam//launch
+-- Installing: /home/yeokim/Moppy/install/andino_slam/share/andino_slam//launch/rviz.launch.py
+-- Installing: /home/yeokim/Moppy/install/andino_slam/share/andino_slam//launch/slam_toolbox_online_async.launch.py
+-- Installing: /home/yeokim/Moppy/install/andino_slam/share/andino_slam//rviz
+-- Installing: /home/yeokim/Moppy/install/andino_slam/share/andino_slam//rviz/andino_slam.rviz
+-- Installing: /home/yeokim/Moppy/install/andino_slam/share/ament_index/resource_index/package_run_dependencies/andino_slam
+-- Installing: /home/yeokim/Moppy/install/andino_slam/share/ament_index/resource_index/parent_prefix_path/andino_slam
+-- Installing: /home/yeokim/Moppy/install/andino_slam/share/andino_slam/environment/ament_prefix_path.sh
+-- Installing: /home/yeokim/Moppy/install/andino_slam/share/andino_slam/environment/ament_prefix_path.dsv
+-- Installing: /home/yeokim/Moppy/install/andino_slam/share/andino_slam/environment/path.sh
+-- Installing: /home/yeokim/Moppy/install/andino_slam/share/andino_slam/environment/path.dsv
+-- Installing: /home/yeokim/Moppy/install/andino_slam/share/andino_slam/local_setup.bash
+-- Installing: /home/yeokim/Moppy/install/andino_slam/share/andino_slam/local_setup.sh
+-- Installing: /home/yeokim/Moppy/install/andino_slam/share/andino_slam/local_setup.zsh
+-- Installing: /home/yeokim/Moppy/install/andino_slam/share/andino_slam/local_setup.dsv
+-- Installing: /home/yeokim/Moppy/install/andino_slam/share/andino_slam/package.dsv
+-- Installing: /home/yeokim/Moppy/install/andino_slam/share/ament_index/resource_index/packages/andino_slam
+-- Installing: /home/yeokim/Moppy/install/andino_slam/share/andino_slam/cmake/andino_slamConfig.cmake
+-- Installing: /home/yeokim/Moppy/install/andino_slam/share/andino_slam/cmake/andino_slamConfig-version.cmake
+-- Installing: /home/yeokim/Moppy/install/andino_slam/share/andino_slam/package.xml
