@@ -1,2 +1,0 @@
-Invoking command in '/home/yeokim/Moppy/build/andino_base': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/yeokim/Moppy/src/simulation/ros2_ws/src/andino_webots/submodules/andino/andino_base -DCMAKE_INSTALL_PREFIX=/home/yeokim/Moppy/install/andino_base
-Invoked command in '/home/yeokim/Moppy/build/andino_base' returned '1': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/yeokim/Moppy/src/simulation/ros2_ws/src/andino_webots/submodules/andino/andino_base -DCMAKE_INSTALL_PREFIX=/home/yeokim/Moppy/install/andino_base
