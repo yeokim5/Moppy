@@ -1,5 +1,4 @@
-# Ignore ros2_ws build, install, log, and data folders
-src/simulation/ros2_ws/build/
-src/simulation/ros2_ws/install/
-src/simulation/ros2_ws/log/
-src/simulation/ros2_ws/data/
+/src/simulation/ros2_ws/build
+/src/simulation/ros2_ws/data
+/src/simulation/ros2_ws/log
+/src/simulation/ros2_ws/install
