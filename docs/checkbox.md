@@ -1,7 +1,6 @@
-# Updated Plan 2: Raspberry Pi Project for Perception ML Ops
+## **Updated Plan 2: Raspberry Pi Project for Perception ML Ops**
 
-## 1. Simulation
-
+### **1. Simulation**
 - [ ] Set up the Webots simulation environment to model a virtual robotics scenario.
 - [ ] Create 3D room models with various layouts and obstacles to simulate real-world environments.
 - [ ] Implement a robot model with accurate physical properties (e.g., size, weight, movement dynamics).
@@ -14,9 +13,13 @@
 - [ ] Capture and save camera image datasets for tasks like obstacle detection and surface classification.
 - [ ] Implement a labeling mechanism for simulation data (e.g., obstacle types, floor types).
 - [ ] Validate the quality and format of simulation data to ensure it meets downstream requirements.
+- [ ] Implement `coverage_planner.py` with the CCPP algorithm using the simulated SLAM map.
+- [ ] Integrate `coverage_planner.py` with the simulated robot’s navigation system in Webots.
+- [ ] Test the CCPP algorithm in various simulated room layouts to ensure complete coverage.
 
-## 2. Data Processing
+---
 
+### **2. Data Processing**
 - [ ] Set up an Apache Airflow environment to orchestrate data workflows.
 - [ ] Develop `data_cleaning_dag.py` as a workflow to automate data preprocessing.
 - [ ] Implement `data_processor.py` with utility functions for data handling.
@@ -27,8 +30,9 @@
 - [ ] Implement validation and quality checks to ensure image data integrity.
 - [ ] Document data format specifications for use in machine learning models.
 
-## 3. Model Development
+---
 
+### **3. Model Development**
 - [ ] Design a lightweight CNN architecture (e.g., MobileNet) in `cnn_model.py` optimized for real-time inference.
 - [ ] Implement the model definition using PyTorch.
 - [ ] Create a training pipeline with hyperparameter tuning (e.g., learning rate, batch size).
@@ -41,12 +45,13 @@
 - [ ] Implement model checkpointing to save progress during training.
 - [ ] Export the trained model to TorchScript or ONNX formats for deployment.
 
-## 4. CI/CD Pipeline
+---
 
+### **4. CI/CD Pipeline**
 - [ ] Configure a GitHub repository structure for version control and collaboration.
 - [ ] Create a `train_model.yml` GitHub Actions workflow to automate model training.
 - [ ] Set up automated testing for code reliability.
-- [ ] Implement code quality checks using tools like `black`, `flake8`, and `mypy`.
+- [ ] Implement code quality checks using tools like black, flake8, and mypy.
 - [ ] Configure an MLflow server for centralized experiment tracking.
 - [ ] Create a model registry to manage trained models.
 - [ ] Set up automated model validation to ensure performance standards.
@@ -55,17 +60,25 @@
 - [ ] Document the CI/CD workflow for reproducibility.
 - [ ] Dockerize the training and inference code for consistency across environments.
 
-## 5. Model Deployment
+---
 
-- [ ] Create a `Dockerfile` for an inference service tailored to the Raspberry Pi.
+### **5. Model Deployment**
+- [ ] Create a Dockerfile for an inference service tailored to the Raspberry Pi.
 - [ ] Implement `obstacle_detector.py` as the inference code for real-time predictions.
 - [ ] Optimize the model for Raspberry Pi using frameworks like TensorFlow Lite or ONNX Runtime.
 - [ ] Configure the deployment for real-time inference on the Raspberry Pi.
 - [ ] Develop `ota_updater.py` for over-the-air updates to the deployed model.
 - [ ] Test the deployment pipeline on the Raspberry Pi to ensure functionality.
+- [ ] Deploy `coverage_planner.py` to the Raspberry Pi for real-world navigation.
+- [ ] Implement `map_handler.py` to manage static and dynamic obstacles based on LIDAR and perception data.
+- [ ] Integrate `obstacle_detector.py` with `map_handler.py` to update the map with detected obstacles.
+- [ ] Implement dynamic replanning in `coverage_planner.py` when new obstacles are detected.
+- [ ] Test the integrated system (perception + navigation) on the Raspberry Pi in real-world scenarios.
 
-## 6. Monitoring & Maintenance
 
+---
+
+### **6. Monitoring & Maintenance**
 - [ ] Implement `prometheus_metrics.py` to export model performance metrics to Prometheus.
 - [ ] Configure a Prometheus server to collect and store metrics.
 - [ ] Set up Grafana dashboards to visualize model performance over time.
@@ -77,8 +90,9 @@
 - [ ] Implement performance benchmarks for inference speed and accuracy.
 - [ ] Create maintenance documentation to guide future updates.
 
-## 7. Documentation
+---
 
+### **7. Documentation**
 - [ ] Complete API documentation for all custom scripts and services.
 - [ ] Create user manuals for operating the system.
 - [ ] Document operational procedures for running simulations, training, and deployment.
@@ -90,3 +104,6 @@
 - [ ] Create a project roadmap outlining completed and future steps.
 - [ ] Write a project completion report summarizing outcomes.
 - [ ] Develop portfolio presentation materials (e.g., blog posts, demo videos).
+- [ ] Document the CCPP algorithm and its integration with perception and navigation modules.
+
+---
