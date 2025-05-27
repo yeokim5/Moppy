@@ -188,7 +188,7 @@ def generate_launch_description():
         package="controller_manager",
         executable="spawner",
         output="screen",
-        arguments=["diff_controller"] + controller_manager_timeout,
+        arguments=["diff_controller", "--controller-manager", "/controller_manager"] + controller_manager_timeout,
         parameters=[
             {"use_sim_time": use_sim_time},
         ],
