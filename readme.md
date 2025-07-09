@@ -1,3 +1,8 @@
+# Moppy
+
+## Project Structure
+
+```
 Moppy/
 ├── andino_hardware/        # Hardware assembly instructions and STL files
 ├── andino_ws/              # ROS 2 workspace
@@ -25,3 +30,4 @@ Moppy/
 ├── maps/                   # Generated SLAM maps
 ├── blueprints/             # Final semantic blueprints
 └── Makefile                # Automation rules
+```
