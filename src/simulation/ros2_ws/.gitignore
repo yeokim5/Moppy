@@ -1,5 +1,0 @@
-# Ignore ros2_ws build, install, and log folders
-./build/
-./install/
-./log/
-./home/yeokim/ros2_ws/data/images
