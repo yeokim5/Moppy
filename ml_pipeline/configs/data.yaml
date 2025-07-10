@@ -1,0 +1,30 @@
+# Dataset Configuration
+
+# Path to dataset directories
+path: ../data  # Root directory relative to the training script
+train: train/images  # Training images directory
+val: val/images  # Validation images directory
+test: test/images  # Test images directory
+
+# Classes
+names:
+  0: person
+  1: bicycle
+  2: car
+  3: motorcycle
+  4: airplane
+  5: bus
+  6: train
+  7: truck
+  8: boat
+  9: traffic light
+
+# Dataset settings
+nc: 10  # Number of classes
+task: detect  # Options: detect, segment, classify, pose
+
+# Additional settings
+single_cls: false  # Train as single-class dataset
+rect: false  # Rectangular training with each batch collated for minimum padding
+cache: false  # Cache images for faster training
+image_weights: false  # Use weighted image selection for training

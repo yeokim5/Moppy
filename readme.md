@@ -12,11 +12,6 @@ Moppy/
 ├── ml_pipeline/            # ML development pipeline
 │   ├── configs/            # Model configurations
 │   ├── data/               # Dataset storage
-│   │   ├── raw/            # Raw collected images
-│   │   ├── labeled/        # Labeled dataset
-│   │   ├── train/          # Training split
-│   │   ├── val/            # Validation split
-│   │   └── test/           # Test split
 │   ├── models/             # Trained models
 │   ├── notebooks/          # Jupyter notebooks for exploration
 │   └── scripts/            # Training and automation scripts

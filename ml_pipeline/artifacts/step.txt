@@ -1,0 +1,41 @@
+https://colab.research.google.com/github/EdjeElectronics/Train-and-Deploy-YOLO-Models/blob/main/Train_YOLO_Models.ipynb#scrollTo=gzaJQ2sGEPhP
+
+1. use label studio to label
+2. download it as data.zip -> unzip to custom_data
+
+3. sperate with train, val(later also do with test)
+- wget -O /artifacts/train_val_split.py https://raw.githubusercontent.com/EdjeElectronics/Train-and-Deploy-YOLO-Models/refs/heads/main/utils/train_val_split.py
+- python train_val_split.py --datapath="/artifacts/custom_data" --train_pct=0.9
+
+4. basic data.yaml config file
+
+5. run training
+- yolo detect train data=/artifacts/data.yaml model=yolo11n.pt epochs=60 imgsz=640(change to 480 for faster)
+
+6. zip with model & train result
+# Create "my_model" folder to store model weights and train results
+!mkdir /artifacts/my_model
+!cp /artifacts/runs/detect/train/weights/best.pt /artifacts/my_model/my_model.pt
+!cp -r /artifacts/runs/detect/train /artifacts/my_model
+# Zip into "my_model.zip"
+%cd my_model
+!zip /artifacts/my_model.zip my_model.pt
+!zip -r /artifacts/my_model.zip train
+%cd /artifacts
+
+7. deploy model 
+PC: 
+conda create --name yolo-env1 python=3.12 -y
+conda activate yolo-env1
+pip install ultralytics
+cd path/to/folder
+curl -o yolo_detect.py https://raw.githubusercontent.com/EdjeElectronics/Train-and-Deploy-YOLO-Models/refs/heads/main/yolo_detect.py
+python yolo_detect.py --model my_model.pt --source usb0 --resolution 1280x720
+python yolo_detect.py --model my_model.pt --source .\d44e22fc-candy_72.jpg 
+
+PI:
+
+
+
+
+
