@@ -1,0 +1,1 @@
+# This file makes the image_data_collector directory a Python package 

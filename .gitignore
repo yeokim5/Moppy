@@ -163,6 +163,12 @@ cython_debug/
 # ROS/Andino specific
 *.build
 *.install
+*.log
+
+andino_ws/install/
+andino_ws/build/
+andino_ws/log/
+
 
 # PlatformIO files
 .pio
