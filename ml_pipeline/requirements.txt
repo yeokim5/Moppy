@@ -1,0 +1,14 @@
+torch
+torchvision
+mlflow
+dvc
+numpy
+pandas
+scikit-learn
+matplotlib
+PyYAML
+opencv-python
+ultralytics
+ipykernel
+dagshub
+requests

@@ -1,0 +1,51 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python ml_pipeline/src/pipeline/stage_01_data_ingestion.py
+    deps:
+    - path: ml_pipeline/src/components/data_ingestion.py
+      hash: md5
+      md5: 9d261cc7f8b01bb42d5ac15c039a0079
+      size: 8264
+    - path: ml_pipeline/src/pipeline/stage_01_data_ingestion.py
+      hash: md5
+      md5: 02481182916098a2eb4f8b671369ead5
+      size: 960
+    outs:
+    - path: ml_pipeline/src/artifacts/training_data
+      hash: md5
+      md5: 67574a6aae3be8e4562fc60142880cee.dir
+      size: 13321893
+      nfiles: 356
+  training:
+    cmd: python ml_pipeline/src/pipeline/stage_02_model_train.py
+    deps:
+    - path: ml_pipeline/src/artifacts/training_data
+      hash: md5
+      md5: 9ffc95083df6a84ac1b4e40e34bc78e1.dir
+      size: 13367338
+      nfiles: 358
+    - path: ml_pipeline/src/configs/data.yaml
+      hash: md5
+      md5: b2988997c4ca949936a3e7775b221818
+      size: 357
+    - path: ml_pipeline/src/configs/params.yaml
+      hash: md5
+      md5: 78d4b57a2b5e5767bc37f5a2a559f656
+      size: 185
+    - path: ml_pipeline/src/pipeline/stage_02_model_train.py
+      hash: md5
+      md5: 65b44d07a9bcfaf93d2d1cbf36ae39b5
+      size: 891
+    params:
+      ml_pipeline/src/configs/params.yaml:
+        AUGMENTATION: true
+        BATCH_SIZE: 16
+        EPOCHS: 1
+        IMAGE_SIZE: 640
+    outs:
+    - path: ml_pipeline/src/artifacts/model
+      hash: md5
+      md5: e298da488dfc4e6b82aa5145cdaa00cf.dir
+      size: 15040409
+      nfiles: 17

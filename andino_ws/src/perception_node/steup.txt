@@ -1,0 +1,4 @@
+At inference time on the robot (in perception_node), you will also need to resize the incoming camera frames to the model's expected input size:
+
+# Example in Python using OpenCV
+resized = cv2.resize(frame, (640, 640))

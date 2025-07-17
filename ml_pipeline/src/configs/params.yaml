@@ -1,0 +1,11 @@
+# Model parameters
+IMAGE_SIZE: 640
+INCLUDE_TOP: true
+CLASSES: 1
+WEIGHTS: "yolo11n.pt"
+LEARNING_RATE: 0.001
+
+# Training parameters
+EPOCHS: 1
+BATCH_SIZE: 16
+AUGMENTATION: true

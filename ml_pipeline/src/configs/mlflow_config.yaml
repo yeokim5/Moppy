@@ -1,0 +1,7 @@
+mlflow:
+  tracking_uri: "https://dagshub.com/yeokim5/Moppy.mlflow"
+  experiment_name: "moppy_object_detection3"
+  
+MLFLOW_TRACKING_USERNAME: yeokim5
+MLFLOW_TRACKING_PASSWORD: b050ac9d7f7aac1d90aa60783d6d46fa83d34403
+

@@ -1,0 +1,13 @@
+train: ../artifacts/training_data/train/images
+val: ../artifacts/training_data/valid/images
+test: ../artifacts/training_data/test/images
+
+nc: 1
+names: ['wallet']
+
+roboflow:
+  workspace: test-7slug
+  project: my-first-project-oyzka
+  version: 5
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/test-7slug/my-first-project-oyzka/dataset/5
