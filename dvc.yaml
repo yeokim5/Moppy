@@ -6,7 +6,6 @@ stages:
       - ml_pipeline/src/components/data_ingestion.py
     outs:
       - ml_pipeline/src/artifacts/training_data
- 
 
   training:
     cmd: python ml_pipeline/src/pipeline/stage_02_model_train.py
@@ -17,11 +16,8 @@ stages:
       - ml_pipeline/src/artifacts/training_data
     params:
       - ml_pipeline/src/configs/params.yaml:
-          - IMAGE_SIZE
-          - EPOCHS
-          - BATCH_SIZE
-          - AUGMENTATION
+          - train.epochs
+          - train.batch
+          - train.imgsz
     outs:
       - ml_pipeline/src/artifacts/model
-
-  

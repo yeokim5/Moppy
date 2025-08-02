@@ -1,4 +1,1 @@
-At inference time on the robot (in perception_node), you will also need to resize the incoming camera frames to the model's expected input size:
-
-# Example in Python using OpenCV
-resized = cv2.resize(frame, (640, 640))
+Inference (Detection): This is the critical part. For the best accuracy, the input you give the model on your Raspberry Pi must match the size it was trained on. So, if you train with imgsz: 416, your code on the Pi must resize the camera frames to 416x416 before running detection.

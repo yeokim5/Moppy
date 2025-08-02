@@ -1,11 +1,32 @@
-# Model parameters
-IMAGE_SIZE: 640
-INCLUDE_TOP: true
-CLASSES: 1
-WEIGHTS: "yolo11n.pt"
-LEARNING_RATE: 0.001
+# Model
+# We use 'yolo11n.pt' (nano version) because it is the fastest and most suitable for Raspberry Pi.
+weights: yolo11n.pt
 
-# Training parameters
-EPOCHS: 1
-BATCH_SIZE: 16
-AUGMENTATION: true
+# Training hyperparameters
+# These will be passed directly to the model.train() function.
+# See all options at https://docs.ultralytics.com/modes/train/#arguments
+train:
+  # Core Training Parameters
+  epochs: 200 # Increased epochs for a small dataset. You'll likely need more passes.
+  batch: 8 # Lowered batch size. 16 might be too high for RPi4 with 416 img_size, leading to OOM. 8 is safer.
+  imgsz: 416 # CRITICAL for RPi performance. Must match your inference input size. Keep this for now.
+  patience: 50 # Increased patience. With more epochs, you want to give it more time to improve.
+
+  # Output & Logging
+  project: null # We will set this in the Python script to control the output directory.
+  name: null # We will set this in the script to give each run a unique name.
+  exist_ok: false # Prevents accidentally overwriting a previous run.
+  save_period: 25 # Saves a model checkpoint every 25 epochs. Less frequent saves but still provides backups.
+
+  # Data Augmentation (VERY IMPORTANT for small datasets)
+  # Enabled by default, these values provide strong augmentation.
+  hsv_h: 0.015 # image HSV-Hue augmentation (fraction) - Keep as is.
+  hsv_s: 0.7 # image HSV-Saturation augmentation (fraction) - Keep as is.
+  hsv_v: 0.4 # image HSV-Value augmentation (fraction) - Keep as is.
+  degrees: 15.0 # image rotation (+/- deg) - Good for variations.
+  translate: 0.1 # image translation (+/- fraction) - Good for variations.
+  scale: 0.5 # image scale (+/- gain) - Good for variations.
+  fliplr: 0.5 # image flip left-right (probability) - **Crucial for "wallet" if orientation doesn't matter.**
+  flipud: 0.0 # image flip up-down (probability) - **Keep at 0 unless wallets can be legitimately upside down.**
+  mosaic: 1.0 # mosaic data augmentation (probability) - **Highly recommended for small datasets to create new samples.**
+  mixup: 0.2 # mixup data augmentation (probability) - Slightly increased from 0.1. Can help with regularization.

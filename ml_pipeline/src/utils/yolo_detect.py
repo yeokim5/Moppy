@@ -18,6 +18,8 @@ parser.add_argument('--source', help='Image source, can be image file ("test.jpg
                     required=True)
 parser.add_argument('--thresh', help='Minimum confidence threshold for displaying detected objects (example: "0.4")',
                     default=0.5)
+parser.add_argument('--min_box_size', help='Minimum box size (width x height) in pixels to display (example: "100x100")',
+                    default=None)
 parser.add_argument('--resolution', help='Resolution in WxH to display inference results at (example: "640x480"), \
                     otherwise, match source resolution',
                     default=None)
@@ -26,13 +28,24 @@ parser.add_argument('--record', help='Record results from video or webcam and sa
 
 args = parser.parse_args()
 
-
 # Parse user inputs
 model_path = args.model
 img_source = args.source
-min_thresh = args.thresh
+min_thresh = float(args.thresh)
+min_box_size = args.min_box_size
 user_res = args.resolution
 record = args.record
+
+# Parse minimum box size if provided
+min_box_width = None
+min_box_height = None
+if min_box_size:
+    try:
+        min_box_width, min_box_height = map(int, min_box_size.split('x'))
+        print(f"Minimum box size filter: {min_box_width}x{min_box_height} pixels")
+    except:
+        print("Error: min_box_size must be in format 'widthxheight' (e.g., '100x100')")
+        sys.exit(1)
 
 # Check if model file exists and is valid
 if (not os.path.exists(model_path)):
@@ -179,6 +192,11 @@ while True:
         xyxy = xyxy_tensor.numpy().squeeze() # Convert tensors to Numpy array
         xmin, ymin, xmax, ymax = xyxy.astype(int) # Extract individual coordinates and convert to int
 
+        # Calculate box dimensions
+        box_width = xmax - xmin
+        box_height = ymax - ymin
+        box_area = box_width * box_height
+
         # Get bounding box class ID and name
         classidx = int(detections[i].cls.item())
         classname = labels[classidx]
@@ -186,13 +204,20 @@ while True:
         # Get bounding box confidence
         conf = detections[i].conf.item()
 
-        # Draw box if confidence threshold is high enough
-        if conf > 0.5:
+        # Check if detection meets both confidence and size criteria
+        meets_confidence = conf > min_thresh
+        meets_size = True
+        
+        if min_box_width and min_box_height:
+            meets_size = (box_width >= min_box_width) and (box_height >= min_box_height)
 
+        # Draw box if both confidence and size thresholds are met
+        if meets_confidence and meets_size:
             color = bbox_colors[classidx % 10]
             cv2.rectangle(frame, (xmin,ymin), (xmax,ymax), color, 2)
 
-            label = f'{classname}: {int(conf*100)}%'
+            # Enhanced label with size information
+            label = f'{classname}: {int(conf*100)}% ({box_width}x{box_height})'
             labelSize, baseLine = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 1) # Get font size
             label_ymin = max(ymin, labelSize[1] + 10) # Make sure not to draw label too close to top of window
             cv2.rectangle(frame, (xmin, label_ymin-labelSize[1]-10), (xmin+labelSize[0], label_ymin+baseLine-10), color, cv2.FILLED) # Draw white box to put label text in
@@ -200,6 +225,9 @@ while True:
 
             # Basic example: count the number of objects in the image
             object_count = object_count + 1
+            
+            # Print detection info to console
+            print(f"Object detected: {classname} (Confidence: {conf:.3f}, Size: {box_width}x{box_height}, Area: {box_area})")
 
     # Calculate and draw framerate (if using video, USB, or Picamera source)
     if source_type == 'video' or source_type == 'usb' or source_type == 'picamera':

@@ -22,8 +22,8 @@ stages:
     deps:
     - path: ml_pipeline/src/artifacts/training_data
       hash: md5
-      md5: 9ffc95083df6a84ac1b4e40e34bc78e1.dir
-      size: 13367338
+      md5: ae77de3da54f90b1a5f55ebd8a0653de.dir
+      size: 13377012
       nfiles: 358
     - path: ml_pipeline/src/configs/data.yaml
       hash: md5
@@ -46,6 +46,6 @@ stages:
     outs:
     - path: ml_pipeline/src/artifacts/model
       hash: md5
-      md5: e298da488dfc4e6b82aa5145cdaa00cf.dir
-      size: 15040409
-      nfiles: 17
+      md5: d751713988987e9331980363e24189ce.dir
+      size: 0
+      nfiles: 0
