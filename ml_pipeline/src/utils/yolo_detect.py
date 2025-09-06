@@ -25,6 +25,8 @@ parser.add_argument('--resolution', help='Resolution in WxH to display inference
                     default=None)
 parser.add_argument('--record', help='Record results from video or webcam and save it as "demo1.avi". Must specify --resolution argument to record.',
                     action='store_true')
+parser.add_argument('--headless', help='Run without display (useful for headless systems)',
+                    action='store_true')
 
 args = parser.parse_args()
 
@@ -35,6 +37,7 @@ min_thresh = float(args.thresh)
 min_box_size = args.min_box_size
 user_res = args.resolution
 record = args.record
+headless = args.headless
 
 # Parse minimum box size if provided
 min_box_width = None
@@ -214,42 +217,66 @@ while True:
         # Draw box if both confidence and size thresholds are met
         if meets_confidence and meets_size:
             color = bbox_colors[classidx % 10]
-            cv2.rectangle(frame, (xmin,ymin), (xmax,ymax), color, 2)
+            cv2.rectangle(frame, (xmin,ymin), (xmax,ymax), color, 3)
 
             # Enhanced label with size information
             label = f'{classname}: {int(conf*100)}% ({box_width}x{box_height})'
-            labelSize, baseLine = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 1) # Get font size
+            labelSize, baseLine = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2) # Get font size
             label_ymin = max(ymin, labelSize[1] + 10) # Make sure not to draw label too close to top of window
             cv2.rectangle(frame, (xmin, label_ymin-labelSize[1]-10), (xmin+labelSize[0], label_ymin+baseLine-10), color, cv2.FILLED) # Draw white box to put label text in
-            cv2.putText(frame, label, (xmin, label_ymin-7), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1) # Draw label text
+            cv2.putText(frame, label, (xmin, label_ymin-7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2) # Draw label text
 
             # Basic example: count the number of objects in the image
             object_count = object_count + 1
             
             # Print detection info to console
-            print(f"Object detected: {classname} (Confidence: {conf:.3f}, Size: {box_width}x{box_height}, Area: {box_area})")
+            print(f"WALLET DETECTED! {classname} (Confidence: {conf:.3f}, Size: {box_width}x{box_height}, Area: {box_area})")
+
+    # Save image if any objects were detected
+    if object_count > 0:
+        import time
+        timestamp = time.strftime("%Y%m%d_%H%M%S")
+        if source_type == 'image' or source_type == 'folder':
+            filename = f"pytorch_wallet_detected_{timestamp}_img{img_count}.jpg"
+        else:
+            filename = f"pytorch_wallet_detected_{timestamp}.jpg"
+        
+        cv2.imwrite(filename, frame)
+        print(f"💾 SAVED: {filename} - {object_count} wallet(s) detected!")
 
     # Calculate and draw framerate (if using video, USB, or Picamera source)
     if source_type == 'video' or source_type == 'usb' or source_type == 'picamera':
         cv2.putText(frame, f'FPS: {avg_frame_rate:0.2f}', (10,20), cv2.FONT_HERSHEY_SIMPLEX, .7, (0,255,255), 2) # Draw framerate
     
     # Display detection results
-    cv2.putText(frame, f'Number of objects: {object_count}', (10,40), cv2.FONT_HERSHEY_SIMPLEX, .7, (0,255,255), 2) # Draw total number of detected objects
-    cv2.imshow('YOLO detection results',frame) # Display image
+    if not headless:
+        cv2.putText(frame, f'Number of objects: {object_count}', (10,40), cv2.FONT_HERSHEY_SIMPLEX, .7, (0,255,255), 2) # Draw total number of detected objects
+        cv2.imshow('YOLO detection results',frame) # Display image
+    else:
+        print(f"Frame processed - Objects detected: {object_count}")
+    
     if record: recorder.write(frame)
 
     # If inferencing on individual images, wait for user keypress before moving to next image. Otherwise, wait 5ms before moving to next frame.
-    if source_type == 'image' or source_type == 'folder':
-        key = cv2.waitKey()
-    elif source_type == 'video' or source_type == 'usb' or source_type == 'picamera':
-        key = cv2.waitKey(5)
-    
-    if key == ord('q') or key == ord('Q'): # Press 'q' to quit
-        break
-    elif key == ord('s') or key == ord('S'): # Press 's' to pause inference
-        cv2.waitKey()
-    elif key == ord('p') or key == ord('P'): # Press 'p' to save a picture of results on this frame
-        cv2.imwrite('capture.png',frame)
+    if not headless:
+        if source_type == 'image' or source_type == 'folder':
+            key = cv2.waitKey()
+        elif source_type == 'video' or source_type == 'usb' or source_type == 'picamera':
+            key = cv2.waitKey(5)
+        
+        if key == ord('q') or key == ord('Q'): # Press 'q' to quit
+            break
+        elif key == ord('s') or key == ord('S'): # Press 's' to pause inference
+            cv2.waitKey()
+        elif key == ord('p') or key == ord('P'): # Press 'p' to save a picture of results on this frame
+            cv2.imwrite('capture.png',frame)
+    else:
+        # In headless mode, just process a few frames for demo or add your own exit condition
+        if source_type == 'image' or source_type == 'folder':
+            pass  # Process all images
+        else:
+            # For video/camera, you might want to add a frame limit or time limit
+            pass
     
     # Calculate FPS for this frame
     t_stop = time.perf_counter()
@@ -273,4 +300,5 @@ if source_type == 'video' or source_type == 'usb':
 elif source_type == 'picamera':
     cap.stop()
 if record: recorder.release()
-cv2.destroyAllWindows()
+if not headless:
+    cv2.destroyAllWindows()
