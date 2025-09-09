@@ -10,7 +10,7 @@ import ncnn
 
 # Define and parse user input arguments
 parser = argparse.ArgumentParser()
-parser.add_argument('--model', help='Path to NCNN model directory (example: "model_dir/")',
+parser.add_argument('--model', help='Path to NCNN model directory (example: "model/best_ncnn_model")',
                     required=True)
 parser.add_argument('--source', help='Image source, can be image file ("test.jpg"), \
                     image folder ("test_dir"), video file ("testvid.mp4"), index of USB camera ("usb0"), or index of Picamera ("picamera0")', 
@@ -26,6 +26,10 @@ parser.add_argument('--record', help='Record results from video or webcam and sa
                     action='store_true')
 parser.add_argument('--headless', help='Run without display (useful for headless systems)',
                     action='store_true')
+parser.add_argument('--capture_all', help='Save every frame as image file, not just detected frames (true/false)',
+                    type=str, default='false')
+parser.add_argument('--debug_confidence', help='Print all detection confidences, even below threshold (true/false)',
+                    type=str, default='false')
 
 args = parser.parse_args()
 
@@ -37,6 +41,8 @@ min_box_size = args.min_box_size
 user_res = args.resolution
 record = args.record
 headless = args.headless
+capture_all = args.capture_all.lower() == 'true'
+debug_confidence = args.debug_confidence.lower() == 'true'
 
 # Parse minimum box size if provided
 min_box_width = None
@@ -49,24 +55,200 @@ if min_box_size:
         print("Error: min_box_size must be in format 'widthxheight' (e.g., '100x100')")
         sys.exit(1)
 
-# Check if model directory exists and contains required files
-param_file = os.path.join(model_path, "model.ncnn.param")
-bin_file = os.path.join(model_path, "model.ncnn.bin")
-
-if not os.path.exists(param_file) or not os.path.exists(bin_file):
-    print('ERROR: Model directory must contain model.ncnn.param and model.ncnn.bin files')
+# Check if model directory exists
+if not os.path.exists(model_path):
+    print('ERROR: Model path is invalid or model was not found. Make sure the model path was entered correctly.')
     sys.exit(0)
 
+# NCNN Model Loading
+class NCNNYolo:
+    def __init__(self, model_path, target_size=416, num_threads=4):
+        self.target_size = target_size
+        self.num_threads = num_threads
+        
+        # Initialize NCNN network
+        self.net = ncnn.Net()
+        self.net.opt.use_vulkan_compute = False
+        self.net.opt.num_threads = num_threads
+        
+        # Load model files
+        param_path = os.path.join(model_path, "model.ncnn.param")
+        bin_path = os.path.join(model_path, "model.ncnn.bin")
+        
+        if not os.path.exists(param_path):
+            # List files in directory to help debug
+            files = os.listdir(model_path)
+            print(f"Files in model directory: {files}")
+            print(f"ERROR: Could not find NCNN model files in {model_path}")
+            sys.exit(1)
+        
+        print(f"Loading NCNN model from: {param_path}, {bin_path}")
+        ret = self.net.load_param(param_path)
+        if ret != 0:
+            print(f"ERROR: Failed to load param file: {param_path}")
+            sys.exit(1)
+            
+        ret = self.net.load_model(bin_path)
+        if ret != 0:
+            print(f"ERROR: Failed to load model file: {bin_path}")
+            sys.exit(1)
+        
+        print("NCNN model loaded successfully!")
+        
+        # Define class names (adjust based on your model)
+        self.class_names = {0: 'wallet'}
+    
+    def preprocess(self, image):
+        """Preprocess image for NCNN inference"""
+        h, w = image.shape[:2]
+        
+        # Calculate scaling factor
+        scale = self.target_size / max(h, w)
+        new_w = int(w * scale)
+        new_h = int(h * scale)
+        
+        # Resize image
+        resized = cv2.resize(image, (new_w, new_h))
+        
+        # Pad image to target size
+        top = (self.target_size - new_h) // 2
+        bottom = self.target_size - new_h - top
+        left = (self.target_size - new_w) // 2
+        right = self.target_size - new_w - left
+        
+        padded = cv2.copyMakeBorder(resized, top, bottom, left, right, 
+                                  cv2.BORDER_CONSTANT, value=(114, 114, 114))
+        
+        # NCNN expects BGR format, so we don't need to convert
+        # Create NCNN Mat directly from BGR image
+        mat_in = ncnn.Mat.from_pixels(padded, ncnn.Mat.PixelType.PIXEL_BGR, self.target_size, self.target_size)
+        
+        # Normalize (0-1 range)
+        mean_vals = [0.0, 0.0, 0.0]
+        norm_vals = [1/255.0, 1/255.0, 1/255.0]
+        mat_in.substract_mean_normalize(mean_vals, norm_vals)
+        
+        return mat_in, scale, left, top
+    
+    def postprocess(self, output, scale, left, top, conf_threshold=0.25, nms_threshold=0.45, debug_mode=False):
+        """Post-process NCNN output to get detections"""
+        detections = []
+        
+        print(f"Output shape: h={output.h}, w={output.w}, c={output.c}")  # Debug info
+        
+        # NCNN YOLO output is transposed: shape is (5, num_detections) or (6, num_detections)
+        # Row 0: x_center, Row 1: y_center, Row 2: width, Row 3: height, Row 4: confidence
+        num_detections = output.w
+        
+        for i in range(num_detections):
+            # Get values for this detection (column i)
+            x_center = output.row(0)[i]  
+            y_center = output.row(1)[i]  
+            width = output.row(2)[i]     
+            height = output.row(3)[i]    
+            confidence = output.row(4)[i]
+            
+            # Debug: show all detections if debug mode is enabled
+            if debug_mode and i < 10:  # Show first 10 detections for debugging
+                print(f"Detection {i}: confidence={confidence:.3f}, x={x_center:.1f}, y={y_center:.1f}, w={width:.1f}, h={height:.1f}")
+            
+            # Skip low confidence detections
+            if confidence < conf_threshold:
+                continue
+            
+            # Debug: print raw values for first detection
+            if len(detections) == 0:  # Print for first valid detection only
+                print(f"Raw values: x_center={x_center:.3f}, y_center={y_center:.3f}, width={width:.3f}, height={height:.3f}, conf={confidence:.3f}")
+                print(f"Target size: {self.target_size}, Scale: {scale:.3f}, Left: {left}, Top: {top}")
+            
+            # The coordinates might already be in pixel space (not normalized)
+            # Let's try treating them as pixel coordinates directly
+            x_center_px = x_center
+            y_center_px = y_center  
+            width_px = width
+            height_px = height
+            
+            # Convert center format to corner format on padded image
+            x1_padded = x_center_px - width_px / 2
+            y1_padded = y_center_px - height_px / 2
+            x2_padded = x_center_px + width_px / 2
+            y2_padded = y_center_px + height_px / 2
+            
+            # Remove padding offset and scale back to original image
+            x1 = (x1_padded - left) / scale
+            y1 = (y1_padded - top) / scale
+            x2 = (x2_padded - left) / scale
+            y2 = (y2_padded - top) / scale
+            
+            # For single class (wallet), class_id = 0
+            class_id = 0
+            
+            detections.append({
+                'bbox': [int(x1), int(y1), int(x2), int(y2)],
+                'confidence': confidence,
+                'class_id': class_id,
+                'class_name': self.class_names.get(class_id, 'unknown')
+            })
+        
+        # Apply NMS
+        detections = self.apply_nms(detections, nms_threshold)
+        return detections
+    
+    def apply_nms(self, detections, nms_threshold):
+        """Apply Non-Maximum Suppression"""
+        if not detections:
+            return []
+        
+        # Sort by confidence
+        detections.sort(key=lambda x: x['confidence'], reverse=True)
+        
+        keep = []
+        while detections:
+            current = detections.pop(0)
+            keep.append(current)
+            
+            # Remove overlapping detections
+            detections = [det for det in detections if self.calculate_iou(current['bbox'], det['bbox']) < nms_threshold]
+        
+        return keep
+    
+    def calculate_iou(self, box1, box2):
+        """Calculate Intersection over Union"""
+        x1 = max(box1[0], box2[0])
+        y1 = max(box1[1], box2[1])
+        x2 = min(box1[2], box2[2])
+        y2 = min(box1[3], box2[3])
+        
+        if x2 <= x1 or y2 <= y1:
+            return 0.0
+        
+        intersection = (x2 - x1) * (y2 - y1)
+        area1 = (box1[2] - box1[0]) * (box1[3] - box1[1])
+        area2 = (box2[2] - box2[0]) * (box2[3] - box2[1])
+        union = area1 + area2 - intersection
+        
+        return intersection / union if union > 0 else 0.0
+    
+    def predict(self, image, conf_threshold=0.5, debug_mode=False):
+        """Run inference on image"""
+        # Preprocess
+        mat_in, scale, left, top = self.preprocess(image)
+        
+        # Run inference
+        ex = self.net.create_extractor()
+        ex.input("in0", mat_in)  # Common input name for YOLO models
+        
+        mat_out = ncnn.Mat()
+        ex.extract("out0", mat_out)  # Common output name for YOLO models
+        
+        # Post-process
+        detections = self.postprocess(mat_out, scale, left, top, conf_threshold=conf_threshold, debug_mode=debug_mode)
+        
+        return detections
+
 # Load the NCNN model
-net = ncnn.Net()
-net.load_param(param_file)
-net.load_model(bin_file)
-
-# Class labels - from your metadata.yaml, it shows only one class: wallet
-labels = {0: 'wallet'}
-
-# Model input size (from metadata: 416x416)
-input_size = (416, 416)
+model = NCNNYolo(model_path)
+labels = model.class_names
 
 # Parse input to determine if image source is a file, folder, video, or USB camera
 img_ext_list = ['.jpg','.JPG','.jpeg','.JPEG','.png','.PNG','.bmp','.BMP']
@@ -139,7 +321,7 @@ elif source_type == 'picamera':
     cap.configure(cap.create_video_configuration(main={"format": 'RGB888', "size": (resW, resH)}))
     cap.start()
 
-# Set bounding box colors
+# Set bounding box colors (using the Tableu 10 color scheme)
 bbox_colors = [(164,120,87), (68,148,228), (93,97,209), (178,182,133), (88,159,106), 
               (96,202,231), (159,124,168), (169,162,241), (98,118,150), (172,176,184)]
 
@@ -148,163 +330,9 @@ avg_frame_rate = 0
 frame_rate_buffer = []
 fps_avg_len = 200
 img_count = 0
-
-def preprocess_image(image):
-    """Preprocess image for NCNN model input"""
-    # Resize to model input size
-    resized = cv2.resize(image, input_size)
-    # Convert BGR to RGB
-    rgb_image = cv2.cvtColor(resized, cv2.COLOR_BGR2RGB)
-    # Normalize to [0,1]
-    normalized = rgb_image.astype(np.float32) / 255.0
-    # Transpose to CHW format
-    input_data = np.transpose(normalized, (2, 0, 1))
-    return input_data
-
-def apply_nms(detections, iou_threshold=0.5):
-    """Apply Non-Maximum Suppression to remove overlapping detections"""
-    if len(detections) == 0:
-        return detections
-    
-    # Convert to numpy arrays for easier processing
-    boxes = np.array([det['bbox'] for det in detections])
-    scores = np.array([det['confidence'] for det in detections])
-    
-    # Calculate areas
-    x1, y1, x2, y2 = boxes[:, 0], boxes[:, 1], boxes[:, 2], boxes[:, 3]
-    areas = (x2 - x1) * (y2 - y1)
-    
-    # Sort by confidence (highest first)
-    indices = np.argsort(scores)[::-1]
-    
-    keep = []
-    while len(indices) > 0:
-        # Pick the detection with highest confidence
-        current = indices[0]
-        keep.append(current)
-        
-        if len(indices) == 1:
-            break
-            
-        # Calculate IoU with remaining detections
-        current_box = boxes[current]
-        remaining_boxes = boxes[indices[1:]]
-        
-        # Calculate intersection
-        xx1 = np.maximum(current_box[0], remaining_boxes[:, 0])
-        yy1 = np.maximum(current_box[1], remaining_boxes[:, 1])
-        xx2 = np.minimum(current_box[2], remaining_boxes[:, 2])
-        yy2 = np.minimum(current_box[3], remaining_boxes[:, 3])
-        
-        w = np.maximum(0, xx2 - xx1)
-        h = np.maximum(0, yy2 - yy1)
-        intersection = w * h
-        
-        # Calculate IoU
-        current_area = areas[current]
-        remaining_areas = areas[indices[1:]]
-        union = current_area + remaining_areas - intersection
-        iou = intersection / union
-        
-        # Keep only detections with IoU below threshold
-        indices = indices[1:][iou <= iou_threshold]
-    
-    # Return filtered detections
-    return [detections[i] for i in keep]
-
-def postprocess_detections(output, original_shape, input_shape, conf_threshold=0.5):
-    """Convert NCNN output to bounding boxes - proper YOLO v11 parsing with NMS"""
-    detections = []
-    
-    if len(output.shape) == 2 and output.shape[0] == 5:
-        # YOLOv11 format: output shape is (5, num_anchors) where 5 = [x, y, w, h, confidence]
-        # Transpose to get (num_anchors, 5)
-        output = output.T
-        
-        # The confidence values from NCNN export are much lower than PyTorch
-        # We need to rescale them to match PyTorch confidence range (0.79-0.82)
-        raw_confidences = output[:, 4]
-        
-        # Rescale NCNN confidences to match PyTorch range
-        # PyTorch: ~0.79-0.82, NCNN: ~0.003-0.009
-        # To get 0.005 -> 0.8, we need scaling factor of 160
-        scaling_factor = 160.0  # This will bring 0.005 to 0.8 (80%)
-        confidences = raw_confidences * scaling_factor
-        
-        # Clamp to reasonable range [0, 1]
-        confidences = np.clip(confidences, 0.0, 1.0)
-        
-        # Scale factors to convert from input size to original image size
-        scale_x = original_shape[1] / input_shape[0]  # width scaling  
-        scale_y = original_shape[0] / input_shape[1]   # height scaling
-        
-        # Filter by confidence first
-        valid_indices = confidences > conf_threshold
-        
-        if np.any(valid_indices):
-            valid_outputs = output[valid_indices]
-            valid_confidences = confidences[valid_indices]
-            
-            for i, detection in enumerate(valid_outputs):
-                x_center, y_center, width, height, _ = detection
-                confidence = valid_confidences[i]
-                
-                # NCNN coordinates are normalized to input size (0-1 range relative to 416x416)
-                # Convert to actual pixel coordinates in original image
-                x_center_norm = x_center / input_shape[0]  # Normalize to 0-1
-                y_center_norm = y_center / input_shape[1]  # Normalize to 0-1
-                width_norm = width / input_shape[0]        # Normalize to 0-1
-                height_norm = height / input_shape[1]      # Normalize to 0-1
-                
-                # Scale to original image size
-                x_center_orig = x_center_norm * original_shape[1]  # width
-                y_center_orig = y_center_norm * original_shape[0]  # height
-                width_orig = width_norm * original_shape[1]        # width
-                height_orig = height_norm * original_shape[0]      # height
-                
-                # Convert from center format to corner format
-                x1 = int(x_center_orig - width_orig / 2)
-                y1 = int(y_center_orig - height_orig / 2)
-                x2 = int(x_center_orig + width_orig / 2)
-                y2 = int(y_center_orig + height_orig / 2)
-                
-                # Clamp coordinates to image bounds
-                x1 = max(0, min(x1, original_shape[1] - 1))
-                y1 = max(0, min(y1, original_shape[0] - 1))
-                x2 = max(0, min(x2, original_shape[1] - 1))
-                y2 = max(0, min(y2, original_shape[0] - 1))
-                
-                # Calculate box dimensions
-                box_width = x2 - x1
-                box_height = y2 - y1
-                box_area = box_width * box_height
-                
-                # Filter out unrealistic detections (too small, too thin, etc.)
-                min_area = 5000  # Minimum area for a wallet
-                min_width = 30   # Minimum width
-                min_height = 30  # Minimum height
-                max_aspect_ratio = 5.0  # Maximum width/height or height/width ratio
-                
-                if (box_area >= min_area and 
-                    box_width >= min_width and 
-                    box_height >= min_height and
-                    box_width > 0 and box_height > 0):
-                    
-                    aspect_ratio = max(box_width / box_height, box_height / box_width)
-                    if aspect_ratio <= max_aspect_ratio:
-                        detections.append({
-                            'bbox': [x1, y1, x2, y2],
-                            'confidence': float(confidence),
-                            'class_id': 0  # wallet class
-                        })
-    
-    # Apply Non-Maximum Suppression to remove overlapping detections
-    detections = apply_nms(detections, iou_threshold=0.3)
-    
-    return detections
+frame_counter = 0  # Counter for all frames when capture_all is enabled
 
 # Begin inference loop
-print("Starting NCNN inference...")
 while True:
     t_start = time.perf_counter()
 
@@ -335,103 +363,101 @@ while True:
             print('Unable to read frames from the Picamera. This indicates the camera is disconnected or not working. Exiting program.')
             break
 
-    # Store original frame dimensions
-    original_shape = frame.shape
-
-    # Resize frame to desired display resolution if specified
+    # Resize frame to desired display resolution
     if resize == True:
         frame = cv2.resize(frame,(resW,resH))
 
-    # Preprocess image for NCNN
-    input_data = preprocess_image(frame)
-    
-    # Run NCNN inference
-    with net.create_extractor() as ex:
-        ex.input("in0", ncnn.Mat(input_data))
-        _, output = ex.extract("out0")
-        output_array = np.array(output)
+    # Run NCNN inference on frame
+    detections = model.predict(frame, conf_threshold=min_thresh, debug_mode=debug_confidence)
 
-    # Debug output information
-    print(f"Output shape: {output_array.shape}")
-    print(f"Output range: min={output_array.min():.3f}, max={output_array.max():.3f}")
-    print(f"Frame shape: {frame.shape}")
-    
-    # Show some sample values from each row to understand the format
-    if len(output_array.shape) == 2:
-        for i in range(min(5, output_array.shape[0])):
-            row_sample = output_array[i, :10]  # First 10 values of each row
-            print(f"Row {i} sample: {row_sample}")
-    
-    # Post-process detections to get actual bounding boxes
-    detections = postprocess_detections(output_array, frame.shape, input_size, min_thresh)
-    object_count = len(detections)
-    print(f"Found {object_count} detections with threshold {min_thresh}")
+    # Initialize variable for basic object counting example
+    object_count = 0
 
-    # Draw detections and save images when wallets are detected
-    saved_image = False
-    for i, detection in enumerate(detections):
-        x1, y1, x2, y2 = detection['bbox']
+    # Go through each detection and draw bounding boxes
+    for detection in detections:
+        bbox = detection['bbox']
         confidence = detection['confidence']
+        class_name = detection['class_name']
         class_id = detection['class_id']
         
+        xmin, ymin, xmax, ymax = bbox
+        
         # Calculate box dimensions
-        box_width = x2 - x1
-        box_height = y2 - y1
+        box_width = xmax - xmin
+        box_height = ymax - ymin
         box_area = box_width * box_height
 
-        # Check size criteria
+        # Check if detection meets both confidence and size criteria
+        meets_confidence = confidence > min_thresh
         meets_size = True
+        
         if min_box_width and min_box_height:
             meets_size = (box_width >= min_box_width) and (box_height >= min_box_height)
 
-        if meets_size and box_width > 0 and box_height > 0:
-            # Get class name
-            classname = labels.get(class_id, f'class_{class_id}')
-            
-            # Draw bounding box
+        # Draw box if both confidence and size thresholds are met
+        if meets_confidence and meets_size:
             color = bbox_colors[class_id % 10]
-            cv2.rectangle(frame, (x1, y1), (x2, y2), color, 3)
+            cv2.rectangle(frame, (xmin,ymin), (xmax,ymax), color, 3)
 
             # Enhanced label with size information
-            label = f'{classname}: {int(confidence*100)}% ({box_width}x{box_height})'
+            label = f'{class_name}: {int(confidence*100)}% ({box_width}x{box_height})'
             labelSize, baseLine = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)
-            label_ymin = max(y1, labelSize[1] + 10)
-            cv2.rectangle(frame, (x1, label_ymin-labelSize[1]-10), (x1+labelSize[0], label_ymin+baseLine-10), color, cv2.FILLED)
-            cv2.putText(frame, label, (x1, label_ymin-7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
+            label_ymin = max(ymin, labelSize[1] + 10)
+            cv2.rectangle(frame, (xmin, label_ymin-labelSize[1]-10), (xmin+labelSize[0], label_ymin+baseLine-10), color, cv2.FILLED)
+            cv2.putText(frame, label, (xmin, label_ymin-7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
+
+            # Basic example: count the number of objects in the image
+            object_count = object_count + 1
             
             # Print detection info to console
-            print(f"WALLET DETECTED! {classname} (Confidence: {confidence:.3f}, Size: {box_width}x{box_height}, Area: {box_area})")
-            
-            # Save the annotated image with detection
-            if not saved_image:  # Save only once per frame to avoid duplicates
-                timestamp = time.strftime("%Y%m%d_%H%M%S")
-                if source_type == 'image' or source_type == 'folder':
-                    filename = f"wallet_detected_{timestamp}_img{img_count}.jpg"
-                else:
-                    filename = f"wallet_detected_{timestamp}.jpg"
-                
-                cv2.imwrite(filename, frame)
-                print(f"💾 SAVED: {filename} - Wallet detected with {confidence:.1%} confidence!")
-                saved_image = True
+            print(f"WALLET DETECTED! {class_name} (Confidence: {confidence:.3f}, Size: {box_width}x{box_height}, Area: {box_area})")
 
-    # Calculate and draw framerate
+    # Save image based on capture_all setting or detection
+    should_save = capture_all or object_count > 0
+    
+    if should_save:
+        import time
+        timestamp = time.strftime("%Y%m%d_%H%M%S")
+        
+        if capture_all:
+            # Save all frames with frame counter
+            if source_type == 'image' or source_type == 'folder':
+                filename = f"ncnn_frame_{timestamp}_img{img_count}_frame{frame_counter:06d}.jpg"
+            else:
+                filename = f"ncnn_frame_{timestamp}_frame{frame_counter:06d}.jpg"
+            
+            if object_count > 0:
+                print(f"💾 SAVED: {filename} - {object_count} wallet(s) detected!")
+            else:
+                print(f"📸 SAVED: {filename} - no detections")
+        else:
+            # Original behavior: save only when objects detected
+            if source_type == 'image' or source_type == 'folder':
+                filename = f"ncnn_wallet_detected_{timestamp}_img{img_count}.jpg"
+            else:
+                filename = f"ncnn_wallet_detected_{timestamp}.jpg"
+            
+            print(f"💾 SAVED: {filename} - {object_count} wallet(s) detected!")
+        
+        cv2.imwrite(filename, frame)
+
+    # Calculate and draw framerate (if using video, USB, or Picamera source)
     if source_type == 'video' or source_type == 'usb' or source_type == 'picamera':
-        if not headless:
-            cv2.putText(frame, f'FPS: {avg_frame_rate:0.2f}', (10,20), cv2.FONT_HERSHEY_SIMPLEX, .7, (0,255,255), 2)
+        cv2.putText(frame, f'FPS: {avg_frame_rate:0.2f}', (10,20), cv2.FONT_HERSHEY_SIMPLEX, .7, (0,255,255), 2)
     
     # Display detection results
     if not headless:
-        cv2.putText(frame, f'Number of wallets: {object_count}', (10,40), cv2.FONT_HERSHEY_SIMPLEX, .7, (0,255,255), 2)
-        cv2.imshow('NCNN Wallet Detection',frame)
+        cv2.putText(frame, f'Number of objects: {object_count}', (10,40), cv2.FONT_HERSHEY_SIMPLEX, .7, (0,255,255), 2)
+        cv2.imshow('NCNN YOLO detection results',frame)
     else:
-        if object_count > 0:
-            print(f"*** WALLET DETECTED IN FRAME! Count: {object_count} ***")
+        if debug_confidence:
+            print(f"Frame {frame_counter:06d} processed - Objects detected: {object_count}, Threshold: {min_thresh}")
         else:
-            print(f"Frame processed - No wallets detected")
+            print(f"Frame processed - Objects detected: {object_count}")
     
     if record: recorder.write(frame)
 
-    # Handle key presses
+    # Handle user input
     if not headless:
         if source_type == 'image' or source_type == 'folder':
             key = cv2.waitKey()
@@ -450,18 +476,21 @@ while True:
         else:
             pass
     
-    # Calculate FPS
+    # Increment frame counter for capture_all feature
+    frame_counter += 1
+    
+    # Calculate FPS for this frame
     t_stop = time.perf_counter()
     frame_rate_calc = float(1/(t_stop - t_start))
 
-    # Update FPS buffer
+    # Append FPS result to frame_rate_buffer
     if len(frame_rate_buffer) >= fps_avg_len:
         temp = frame_rate_buffer.pop(0)
         frame_rate_buffer.append(frame_rate_calc)
     else:
         frame_rate_buffer.append(frame_rate_calc)
 
-    # Calculate average FPS
+    # Calculate average FPS for past frames
     avg_frame_rate = np.mean(frame_rate_buffer)
 
 # Clean up
